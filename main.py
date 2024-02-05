@@ -1,2 +1,1 @@
 from pygames import *
-ihojihpo
