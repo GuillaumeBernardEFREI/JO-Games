@@ -71,7 +71,7 @@ while running:
     if pos_y>Window.get_rect().right:
         pos_y=Window.get_rect().right
     Window.blit(Bat,[pos_y,pos_x])
-    print(f"[{pos_x:2f},{pos_y:2f}]")
+    #print(f"[{pos_x:2f},{pos_y:2f}]")
 
     clock.tick(20)#It is needed so that you don't go and have repeated the action a 100 times of going right in just one push.
     pygame.display.update()
