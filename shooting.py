@@ -1,6 +1,7 @@
 import pygame
 import os
 import pygame.locals
+import classes
 
 pygame.init()
 running=True
@@ -31,6 +32,9 @@ class General_Game_Object(pygame.sprite.Sprite):
         return self.sprite.get_rect()
     #rect is the position of the sprite.
 
+def draw_parabola(surface,points:dict):
+    pygame.draw.aalines(surface,"black",False,points.values())
+
 #Surface=Screen()
 #Window= Surface.screen
 Window=Screen().screen
@@ -43,6 +47,20 @@ Bat=General_Game_Object(os.path.join("data","bat.jpg"),resize=[100,100]).sprite
 pos_x=0
 pos_y=0
 clock=pygame.time.Clock()
+
+#to render text:
+font=pygame.font.SysFont(None,20)
+#new code for the trajectory:
+traj=classes.Trajectory(False,100.,1.57+0.43,startpos=classes.Vector2(100,100))
+#At multiples of pi, the trajectory will be vertical
+#Between 0 and pi (non included) the trajectory will go the the right
+#Over pi the trajectory will go to the left
+#Between 0 and pi/2 the trajectory will only fall down
+#Between pi/2 and pi (non included) the trajectory will create a parabola
+
+#I recommend using high numbers for the launchvelocity to be able to have the parabola effect done.
+points=traj.trajectory(10)
+pygame.draw.aalines(Window,"black",False,points)
 
 while running:
     #size=Screen.get_size()
@@ -64,21 +82,29 @@ while running:
         pos_y+=10
     if pos_x<0:
         pos_x=0
-    if pos_x>Window.get_rect().bottom:
-        pos_x=Window.get_rect().bottom
+    if pos_x>Window.get_rect().bottom-100: #minus the size we resized the bat to
+        pos_x=Window.get_rect().bottom-100  #minus the size we resized the bat to
     if pos_y<0:
         pos_y=0
-    if pos_y>Window.get_rect().right:
-        pos_y=Window.get_rect().right
+    if pos_y>Window.get_rect().right-100:  #minus the size we resized the bat to
+        pos_y=Window.get_rect().right-100  #minus the size we resized the bat to
     Window.blit(Bat,[pos_y,pos_x])
     #print(f"[{pos_x:2f},{pos_y:2f}]")
+
+    #to write on the screen:
+    postxt=font.render(f"[{pos_x:2f},{pos_y:2f}]", True, "black")
+    Window.blit(postxt,(10,5))
+    
+    #new code for the trajectory: (just redraw)
+    #points=traj.trajectory(10)
+    pygame.draw.aalines(Window,"black",False,points)
+    #this instruction is to draw the trajectory but you can also move your object through this trajectory
+    #by blitting the object to the values returned by Trajectory.position(time)
 
     clock.tick(20)#It is needed so that you don't go and have repeated the action a 100 times of going right in just one push.
     pygame.display.update()
 
 pygame.quit()
-
-import random
 
 if __name__=='__main__': 
     # this code is to test only, it will run always when we manually run the code.
