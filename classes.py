@@ -64,18 +64,12 @@ class Vector2:
 class Trajectory:
     def __init__(self,use_velocity_vector:bool,launchvelocity:float,angleoflaunch:float,aceleration:float=9.81,start_velocity:Vector2=Vector2(1,1),startpos:Vector2=Vector2(0,0)) -> None:
         if use_velocity_vector:
-            self.a=aceleration/2 #the value should be negative to have
-            self.b=start_velocity.norm()
-
             self.ax=0 #The acceleration will only be the downward gravity for the moment (simplicity to understand)
             self.bx=start_velocity.x
 
             self.ay=aceleration/2
             self.by=start_velocity.y
         else:
-            self.a=aceleration/2
-            self.b=launchvelocity
-
             #because we use an euclidian system, we can consider the values beeing one of a right triangle.
             self.ax=0
             self.bx=launchvelocity*sin(angleoflaunch) #values are in radians
@@ -83,14 +77,18 @@ class Trajectory:
             self.ay=aceleration/2
             self.by=launchvelocity*cos(angleoflaunch) #angleoflaunch is in radians!
 
-        self.c=startpos.norm()
         self.cx=startpos.x
         self.cy=startpos.y
-        
-        self.equation=f"{self.a}t^2+{self.b}t+{self.c}" #the equation is of the form ax^2+bx+c
-                                # And the equation of this particular is stored into this string variable.
-                                #this equation is only to be displayed in dev menus not to be used (i need to check if it even is correct)
 
+        #This equation represents y(x) and time has been eliminated.
+        #The simplification is easy since we have chosen to have ax=0
+        self.a=self.ay/(self.bx**2)
+        self.b=-(2*self.ay)/(self.bx**2)      +self.by/(self.bx) #see calculations done on a sheet
+        self.c=(self.ay*(self.cx**2))/(self.bx**2)    -(self.by*self.cx)/(self.bx)      +self.cy
+
+        self.equation=f"y(x)={self.a}x^2+{self.b}x+{self.c}" #the equation is of the form ax^2+bx+c
+                                # And the equation of this particular trajectory is stored into this string variable.
+                                #this equation is only to be displayed in dev menus not to be used.
         self.startpos=startpos
 
     #    x = horizontal motion
@@ -98,7 +96,6 @@ class Trajectory:
     def position(self,time,fixed:bool=False,screen_size:tuple|None=None) -> tuple:
         x=self.ax*(time**2)+self.bx*time
         y=self.ay*(time**2)+self.by*time
-        #Be careful in case you wish to use the fixed function, you will need to move the start of the equation or use the method : Fixed_Startpos (to be called on every resize of the screen)
         if fixed: #The equation will be fixed to be calculated in a 10k*10k radius (only positive)
                 # And then we render it down to the size of the screen, done here.
             if screen_size==None:
@@ -119,4 +116,26 @@ class Trajectory:
             values.append(pos)
         return values
     
-    #def Fixed_Startpos(self,screen_size):
+    def highestpoint(self):
+        return - self.b/(2*self.a)
+
+    def hitfloor(self,floorheight):
+        root1=(self.b+sqrt((self.b**2)-4*self.a*(self.c-floorheight)))/(2*self.a)
+        root2=(self.b-sqrt((self.b**2)-4*self.a*(self.c-floorheight)))/(2*self.a)
+        if root1>=0 and root2>=0:
+            if root1>=root2:
+                time=root1
+            else:
+                time=root2
+            #time=(root1,root2)
+        elif root1>=0:
+            time = root1
+        elif root2>=0:
+            time = root2
+        else :
+            raise ValueError("The object should've touched the floor somewhere but it doesn't")
+        return time
+
+    def bounce(self):
+        #see https://physics.stackexchange.com/questions/256468/model-formula-for-bouncing-ball
+        pass
