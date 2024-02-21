@@ -91,19 +91,32 @@ class Trajectory:
                                 # And the equation of this particular is stored into this string variable.
                                 #this equation is only to be displayed in dev menus not to be used (i need to check if it even is correct)
 
+        self.startpos=startpos
+
     #    x = horizontal motion
     #    y = vertical motion
-    def position(self,time) -> Vector2:
-        x=self.ax*(time**2)+self.bx*time+self.cx
-        y=self.ay*(time**2)+self.by*time+self.cy
-        return (x,y)
+    def position(self,time,fixed:bool=False,screen_size:tuple|None=None) -> tuple:
+        x=self.ax*(time**2)+self.bx*time
+        y=self.ay*(time**2)+self.by*time
+        #Be careful in case you wish to use the fixed function, you will need to move the start of the equation or use the method : Fixed_Startpos (to be called on every resize of the screen)
+        if fixed: #The equation will be fixed to be calculated in a 10k*10k radius (only positive)
+                # And then we render it down to the size of the screen, done here.
+            if screen_size==None:
+                raise TypeError("You need to give the screen size to make the equation a fixed one.")
+            x*=screen_size[2]/10000 #screen size is the rect of the screen.
+            y*=screen_size[3]/10000
+        
+        x+=self.cx
+        y+=self.cy
+        return (x,y) #sadly, we cannot output a vector2 because it won't work with pygame.
 
-    def trajectory(self,nbpoints:int,maxtime=10)-> list[Vector2]:
+    def trajectory(self,nbpoints:int,starttime=0,maxtime=60,fixed:bool=False,screen_size:tuple|None=None)-> list[Vector2]:
         #maxtime is in seconds
         values=list()
-        for i in range(nbpoints+1): #from time=0 to time=maxtime 
+        for i in range(starttime,nbpoints+1): #from time=0 to time=maxtime 
             time=i*maxtime/nbpoints
-            pos=self.position(time)
+            pos=self.position(time,fixed,screen_size)
             values.append(pos)
         return values
     
+    #def Fixed_Startpos(self,screen_size):

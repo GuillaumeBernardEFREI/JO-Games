@@ -42,7 +42,7 @@ Window=Screen().screen
 BG=Background(os.path.join("data","test.png")).BD
 
 #Example for creating a General Game object:
-Bat=General_Game_Object(os.path.join("data","bat.jpg"),resize=[100,100]).sprite
+Bat=General_Game_Object(os.path.join("data","bat.jpg"),resize=[100,100],alpha=True).sprite
 
 pos_x=0
 pos_y=0
@@ -51,7 +51,7 @@ clock=pygame.time.Clock()
 #to render text:
 font=pygame.font.SysFont(None,20)
 #new code for the trajectory:
-traj=classes.Trajectory(False,100.,1.57+0.43,startpos=classes.Vector2(100,100))
+traj=classes.Trajectory(False,250.,1.57+1.,startpos=classes.Vector2(100,100))
 #At multiples of pi, the trajectory will be vertical
 #Between 0 and pi (non included) the trajectory will go the the right
 #Over pi the trajectory will go to the left
@@ -59,7 +59,7 @@ traj=classes.Trajectory(False,100.,1.57+0.43,startpos=classes.Vector2(100,100))
 #Between pi/2 and pi (non included) the trajectory will create a parabola
 
 #I recommend using high numbers for the launchvelocity to be able to have the parabola effect done.
-points=traj.trajectory(10)
+points=traj.trajectory(100,fixed=True,starttime=-30,screen_size=Window.get_rect())
 pygame.draw.aalines(Window,"black",False,points)
 
 while running:
