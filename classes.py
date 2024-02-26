@@ -64,12 +64,14 @@ class Vector2:
 class Trajectory:
     def __init__(self,use_velocity_vector:bool,launchvelocity:float,angleoflaunch:float,aceleration:float=9.81,start_velocity:Vector2=Vector2(1,1),startpos:Vector2=Vector2(0,0)) -> None:
         if use_velocity_vector:
+            self.launchvelo=start_velocity.norm() # pythagoras
             self.ax=0 #The acceleration will only be the downward gravity for the moment (simplicity to understand)
             self.bx=start_velocity.x
 
             self.ay=aceleration/2
             self.by=start_velocity.y
         else:
+            self.launchvelo=launchvelocity
             #because we use an euclidian system, we can consider the values beeing one of a right triangle.
             self.ax=0
             self.bx=launchvelocity*sin(angleoflaunch) #values are in radians
@@ -119,10 +121,10 @@ class Trajectory:
     def highestpoint(self):
         return - self.b/(2*self.a)
 
-    def hitfloor(self,floorheight):
+    def hitfloor(self,floorheight): #returns the time of the equation when the floor is hit.
         root1=(self.b+sqrt((self.b**2)-4*self.a*(self.c-floorheight)))/(2*self.a)
         root2=(self.b-sqrt((self.b**2)-4*self.a*(self.c-floorheight)))/(2*self.a)
-        if root1>=0 and root2>=0:
+        if root1>=0 and root2>=0: #returns the highest root because the other one should be before the movement started.
             if root1>=root2:
                 time=root1
             else:
@@ -136,6 +138,60 @@ class Trajectory:
             raise ValueError("The object should've touched the floor somewhere but it doesn't")
         return time
 
-    def bounce(self):
-        #see https://physics.stackexchange.com/questions/256468/model-formula-for-bouncing-ball
-        pass
+    def collisions(self,objects:list,trajectory):
+        hit_obj=None
+        for (xPOS,yPOS) in trajectory:
+            #position=(xPOS,yPOS)
+            #compute if the position will intersect or be inside one of the objects
+            for (rect,pos_x,pos_y) in objects:
+                #obj=(rect,pos_x,pos_y)
+                #obj is of the form ( <rect([0](left),[1](top),[2](width),[3](height))>, pos_x, pos_y )
+
+                #if position in the bounding box of the object
+                #   pos_x+rect[0] <= xPOS <= pos_x+rect[2]
+                #for the time beeing we are not using the rect [0] and [1] for positionning objects, but we may later so i make the code able to handle it.
+                #   pos_y+rect[1] <= yPOS <= pos_y+rect[3]
+                if (pos_x+rect[0] <= xPOS <= pos_x+rect[2] and pos_y+rect[1] <= yPOS <= pos_y+rect[3]):
+                    if hit_obj is None:
+                        hit_obj=(rect,pos_x,pos_y)
+        return hit_obj
+
+    def bounce(self,floorheight,hstop,bouncefactor,fixed=False,screen_size=None):
+        #Please be careful, this action is irreversible.
+        #hstop should be either a very little height or the height of the sprite (there shouldn't be a lot of diference)
+        time =self.hitfloor(floorheight)#time when the floor is hit in the current expression.
+        (self.cx,self.cy)=self.position(time,fixed,screen_size)
+       #see https://stackoverflow.com/questions/573084/how-to-calculate-bounce-angle
+        #v final: Vf = Vi + a * t 
+        vf_x=self.launchvelo+self.ax*time
+        vf_y=self.launchvelo+self.ay*time
+        #Calculating the landing angle:
+        land_angle=tanh(vf_y/vf_x)
+        #https://www.quora.com/In-projectile-motion-from-a-height-how-do-you-find-the-landing-angle
+        
+        print(
+"""For the time being this equation is not true to physics as i do not know how it works in physics.
+
+Please be careful of this information!
+        This print is located in the Classes.Trajectory.bounce function.""")
+        self.launchvelo*=bouncefactor #making the speed go down
+        self.bx=self.launchvelo*sin(land_angle) #values are in radians
+        self.by=self.launchvelo*cos(land_angle)
+
+        #same equation as before -> maynbe make a function
+        self.b=-(2*self.ay)/(self.bx**2)      +self.by/(self.bx) #see calculations done on a sheet
+        self.c=(self.ay*(self.cx**2))/(self.bx**2)    -(self.by*self.cx)/(self.bx)      +self.cy
+
+        #check if the ball did bounce
+        if self.highestpoint()>hstop:
+            return True
+        else:
+            return False
+        #returns True if the ball did bounce
+        #returns False if the ball did not bounce
+        #if false, make the object roll on the floor until it is out of the screen
+
+
+
+    #It may be needed to do other type of movement later, for different type of bounces and all see https://en.wikipedia.org/wiki/Reflection_%28mathematics%29#Reflection_across_a_line_in_the_plane
+        
