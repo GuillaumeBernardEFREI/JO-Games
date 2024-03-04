@@ -5,35 +5,10 @@ os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] ="hide" #to hide the ad message pygame 
 import pygame
 import pygame.locals
 import classes
+import cleaned_class as cc
 
 pygame.init()
 running=True
-
-class Screen(pygame.Surface):
-    def __init__(self):
-        size=420,420
-        pygame.Surface.__init__(self,size)
-        self.screen=pygame.display.set_mode(size,pygame.locals.RESIZABLE)
-
-
-class Background(pygame.sprite.Sprite):
-    def __init__(self,path):
-        pygame.sprite.Sprite.__init__(self)
-        self.BD=pygame.image.load(path).convert()
-
-class General_Game_Object(pygame.sprite.Sprite):
-    def __init__(self,img_path, *args, **kargs):#*args and **kargs are if you don't want to have these values in all the classes but only in some that you created.
-        pygame.sprite.Sprite.__init__(self)
-        self.sprite=pygame.image.load(img_path).convert_alpha()#The convert alpha should make the transparent pixels in png really transparent in pygame.
-        if "resize" in kargs:
-            self.resize(kargs['resize'])
-
-    def resize(self,values):
-        self.sprite = pygame.transform.scale(self.sprite,values)
-
-    def rect(self):
-        return self.sprite.get_rect()
-    #rect is the position of the sprite.
 
 #Surface=Screen()
 #Window= Surface.screen
