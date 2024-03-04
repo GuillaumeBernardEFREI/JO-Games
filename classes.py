@@ -88,14 +88,14 @@ class Trajectory:
         self.b=-(2*self.ay)/(self.bx**2)      +self.by/(self.bx) #see calculations done on a sheet
         self.c=(self.ay*(self.cx**2))/(self.bx**2)    -(self.by*self.cx)/(self.bx)      +self.cy
 
-        self.equation=f"y(x)={self.a}x^2+{self.b}x+{self.c}" #the equation is of the form ax^2+bx+c
+        self.equation=f"y(x)={self.a:8f}x²+{self.b:8f}x+{self.c:8f}" #the equation is of the form ax^2+bx+c
                                 # And the equation of this particular trajectory is stored into this string variable.
                                 #this equation is only to be displayed in dev menus not to be used.
         self.startpos=startpos
 
     #    x = horizontal motion
     #    y = vertical motion
-    def position(self,time,fixed:bool=False,screen_size:tuple|None=None) -> tuple:
+    def position(self,time,fixed:bool=False,screen_size:tuple|None=None) -> list:
         x=self.ax*(time**2)+self.bx*time
         y=self.ay*(time**2)+self.by*time
         if fixed: #The equation will be fixed to be calculated in a 10k*10k radius (only positive)
@@ -104,10 +104,11 @@ class Trajectory:
                 raise TypeError("You need to give the screen size to make the equation a fixed one.")
             x*=screen_size[2]/10000 #screen size is the rect of the screen.
             y*=screen_size[3]/10000
-        
+
         x+=self.cx
         y+=self.cy
-        return (x,y) #sadly, we cannot output a vector2 because it won't work with pygame.
+        #print(f"{y:1f}",end=" ")
+        return [x,y] #sadly, we cannot output a vector2 because it won't work with pygame.
 
     def trajectory(self,nbpoints:int,starttime=0,maxtime=60,fixed:bool=False,screen_size:tuple|None=None)-> list[Vector2]:
         #maxtime is in seconds
@@ -119,11 +120,18 @@ class Trajectory:
         return values
     
     def highestpoint(self):
-        return - self.b/(2*self.a)
+        #x=-(self.by)/(2*self.ay)
+        #return (self.a*(x**2))+(self.b*x)+(self.c) #(- self.b/(2*self.a)) #it does not work, need to fix self.b
+        return -(self.b)/(2*self.a)
+    #http://hyperphysics.phy-astr.gsu.edu/hbase/traj.html
 
     def hitfloor(self,floorheight): #returns the time of the equation when the floor is hit.
-        root1=(self.b+sqrt((self.b**2)-4*self.a*(self.c-floorheight)))/(2*self.a)
-        root2=(self.b-sqrt((self.b**2)-4*self.a*(self.c-floorheight)))/(2*self.a)
+        #print(self.b,self.a,self.c,"\n",(self.b**2)-4*self.a*(self.c-floorheight))
+        try :
+            delta=sqrt((self.b**2)-4*self.a*(self.c-floorheight))
+        except : print("negative delta, no solution")
+        root1=(self.b+delta)/(2*self.a)
+        root2=(self.b-delta)/(2*self.a)
         if root1>=0 and root2>=0: #returns the highest root because the other one should be before the movement started.
             if root1>=root2:
                 time=root1
@@ -136,7 +144,7 @@ class Trajectory:
             time = root2
         else :
             raise ValueError("The object should've touched the floor somewhere but it doesn't")
-        return time
+        return time #this function seems to not work, just ignore it.
 
     def collisions(self,objects:list,trajectory):
         hit_obj=None
@@ -156,34 +164,51 @@ class Trajectory:
                         hit_obj=(rect,pos_x,pos_y)
         return hit_obj
 
-    def bounce(self,floorheight,hstop,bouncefactor,fixed=False,screen_size=None):
+    def bounce(self,floorheight,hstop,time,bouncefactor,fixed=False,screen_size=None):
         #Please be careful, this action is irreversible.
         #hstop should be either a very little height or the height of the sprite (there shouldn't be a lot of diference)
-        time =self.hitfloor(floorheight)#time when the floor is hit in the current expression.
+        #time =self.hitfloor(floorheight)#time when the floor is hit in the current expression.
         (self.cx,self.cy)=self.position(time,fixed,screen_size)
+        #print(self.cx,self.cy,"\n")
+        if self.cy >floorheight:
+            self.cy=floorheight
        #see https://stackoverflow.com/questions/573084/how-to-calculate-bounce-angle
         #v final: Vf = Vi + a * t 
-        vf_x=self.launchvelo+self.ax*time
-        vf_y=self.launchvelo+self.ay*time
+        #vf_x=self.launchvelo+self.ax*time
+        #vf_y=self.launchvelo+self.ay*time
+        vf_x=self.bx+self.ax*time #velocity at the time when we reach the floor (time is now / when this is called)
+        vf_y=self.by+self.ay*time
         #Calculating the landing angle:
-        land_angle=tanh(vf_y/vf_x)
+        land_angle=tanh(vf_y/vf_x) # this land_angle is according to 90 degree wall
+        #vert_land_angle=tanh(vf_x/vf_y)
         #https://www.quora.com/In-projectile-motion-from-a-height-how-do-you-find-the-landing-angle
-        
-        print(
-"""For the time being this equation is not true to physics as i do not know how it works in physics.
+        land_angle+=pi/2 #either you use this line or multiply self.by by -1 
+        #print(
+#"""For the time being this equation is not true to physics as i do not know how it works in physics.
 
-Please be careful of this information!
-        This print is located in the Classes.Trajectory.bounce function.""")
-        self.launchvelo*=bouncefactor #making the speed go down
-        self.bx=self.launchvelo*sin(land_angle) #values are in radians
-        self.by=self.launchvelo*cos(land_angle)
+#Please be careful of this information!
+ #       This print is located in the Classes.Trajectory.bounce function.""")
+        #self.launchvelo*=bouncefactor #making the speed go down
+        #self.bx=(self.launchvelo)*sin(land_angle) #values should be in radians
+        #self.by=self.launchvelo*cos(land_angle)
+
+        #self.bx=vf_x*bouncefactor
+        self.by=-vf_y#*(bouncefactor)
+
+        #self.bx*=-1
+        #self.by*=-1
 
         #same equation as before -> maynbe make a function
         self.b=-(2*self.ay)/(self.bx**2)      +self.by/(self.bx) #see calculations done on a sheet
         self.c=(self.ay*(self.cx**2))/(self.bx**2)    -(self.by*self.cx)/(self.bx)      +self.cy
 
+        self.equation=f"y(x)={self.a:8f}x²+{self.b:8f}x+{self.c:8f}"
         #check if the ball did bounce
-        if self.highestpoint()>hstop:
+        highpoint=self.highestpoint()
+        hstop*=10000/screen_size[3] #need to size to our calculations (for a 10kx10k screen by base)
+        print(highpoint,hstop)
+        print(self.equation)
+        if highpoint<hstop: #if highpoint is closer to 0 (because the top of the screen is zero) than the stop point.
             return True
         else:
             return False
