@@ -12,12 +12,11 @@ running=True
 
 #Surface=Screen()
 #Window= Surface.screen
-Window=Screen().screen
+Window=cc.Screen().screen
 #Background_sprite=Background(os.path.join("data","test.png"))
-BG=Background(os.path.join("data","test.png")).BD
-
+BG=cc.Background(os.path.join("data","test.png")).BD
 #Example for creating a General Game object:
-Bat=General_Game_Object(os.path.join("data","bat.jpg"),resize=[100,100],alpha=True).sprite
+Bat=cc.General_Game_Object(os.path.join("data","bat.jpg"),resize=[100,100],alpha=True).sprite
 
 pos_x=0
 pos_y=0
@@ -113,7 +112,7 @@ while running:
             #objpos[1]+=Window.get_rect().bottom/10
             if cd<=0:
                 if bounce:
-                    bounce= traj.bounce(floorheight,lowestheight,time,0.9,True,Window.get_rect())
+                    bounce= traj.bounce(floorheight,lowestheight,time,1,True,Window.get_rect())
                     points=traj.trajectory(100,fixed=True,screen_size=Window.get_rect())
                     maxheight=traj.highestpoint()
                     cd=4/fps

@@ -182,7 +182,7 @@ class Trajectory:
         land_angle=tanh(vf_y/vf_x) # this land_angle is according to 90 degree wall
         #vert_land_angle=tanh(vf_x/vf_y)
         #https://www.quora.com/In-projectile-motion-from-a-height-how-do-you-find-the-landing-angle
-        land_angle+=pi/2 #either you use this line or multiply self.by by -1 
+        #land_angle+=pi/2 #either you use this line or multiply self.by by -1 
         #print(
 #"""For the time being this equation is not true to physics as i do not know how it works in physics.
 
@@ -190,10 +190,13 @@ class Trajectory:
  #       This print is located in the Classes.Trajectory.bounce function.""")
         #self.launchvelo*=bouncefactor #making the speed go down
         #self.bx=(self.launchvelo)*sin(land_angle) #values should be in radians
-        #self.by=self.launchvelo*cos(land_angle)
+        #self.by=(self.launchvelo)*cos(land_angle)
+        #t=self.launchvelo+self.b*time
+        #self.bx=(t)*sin(land_angle)
+        #self.by=(t)*cos(land_angle)
 
-        #self.bx=vf_x*bouncefactor
-        self.by=-vf_y#*(bouncefactor)
+        self.bx=vf_x#*bouncefactor
+        self.by=-1*vf_y#*(bouncefactor)
 
         #self.bx*=-1
         #self.by*=-1

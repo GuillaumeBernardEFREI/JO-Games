@@ -78,7 +78,7 @@ class Trajectory:
         y+=self.cy
         return [x,y]
     
-    def trajectory(self,nbpoints:int,starttime=0,maxtime=60,fixed:bool=False,screen_size:tuple|None=None)-> list[Vector2]:
+    def trajectory(self,nbpoints:int,starttime=0,maxtime=60,fixed:bool=False,screen_size:tuple|None=None)-> list[list]:
         #maxtime is in seconds
         values=list()
         for i in range(starttime,nbpoints+1): #from time=0 to time=maxtime 
