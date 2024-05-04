@@ -16,6 +16,8 @@ game_statement = 0
 
 
 
+#Game_statements = 1 - Selection des personnages
+
 
 
 
@@ -64,8 +66,8 @@ Saut_Force = -11
 GRAVITE = 0.5
 GRAVITE_volant = GRAVITE
 SOL = 540  # Pour définir un sol: les joueurs ne pourront pas aller en dessous de ces coordonées
-walk_speed = 7  # Vitesse des sprites
-volant_speed = -walk_speed * 2
+walk_speed = 9  # Vitesse des sprites #9 de base
+volant_speed = 14
 SOL_VOLANT = 700
 
 # Variables du volant
@@ -82,7 +84,12 @@ rotation_in_progress3 = False
 test3 = False
 Do_a_flip = False
 
+vitesse_nuage = 0.7
 
+#Pour tout ce qui est defini en fonction de la taille de l'écran :
+taille_ecran = (1450, 840)
+taille_selection_skin = (240, 380)
+#taille_joueur = (120,190)
 # ***********************   Initialisation des Sprites *******************************
 
 
@@ -92,54 +99,145 @@ Window = Screen().screen
 
 
 #Ecran titre
-BG_2 = Background(os.path.join("data","Ecran_titre","Fond_menu_2.jpg")).BD
-anneaux = General_Game_Object(os.path.join("data","Ecran_titre","Anneaux.png")).sprite
+BG_2 = Background(os.path.join("data","Ecran_titre","Fond_menu_4.png")).BD
+
+anneaux = General_Game_Object(os.path.join("data","Ecran_titre","Anneaux1.png")).sprite
+anneaux = pygame.transform.scale(anneaux, taille_ecran)
+
 titre = General_Game_Object(os.path.join("data","Ecran_titre","Nom du jeux_3.png")).sprite
 
 
+C1 = General_Game_Object(os.path.join("data","Ecran_titre","Cloud1.png")).sprite
+C1 = pygame.transform.scale(C1, taille_ecran)
+C1_x = 0
+C1_y = 0
+
+
+C2 = General_Game_Object(os.path.join("data","Ecran_titre","Cloud2.png")).sprite
+C2 = pygame.transform.scale(C2, taille_ecran)
+C2_x = 0
+C2_y = 0
+
+
+C3 = General_Game_Object(os.path.join("data","Ecran_titre","Cloud3.png")).sprite
+C3 = pygame.transform.scale(C3, taille_ecran)
+C3_x = 0
+C3_y = 0
+
+
+C4 = General_Game_Object(os.path.join("data","Ecran_titre","Cloud4.png")).sprite
+C4 = pygame.transform.scale(C4, taille_ecran)
+C4_x = 0
+C4_y = 0
+
+
+C5 = General_Game_Object(os.path.join("data","Ecran_titre","Cloud5.png")).sprite
+C5 = pygame.transform.scale(C5, taille_ecran)
+C5_x = 0
+C5_y = 0
+
+
+C6 = General_Game_Object(os.path.join("data","Ecran_titre","Cloud6.png")).sprite
+C6 = pygame.transform.scale(C6, taille_ecran)
+C6_x = 0
+C6_y = 0
+
+
 #Menu
-BG_3 = Background(os.path.join("data","Menu","Fond_3.webp")).BD
+BG_3 = Background(os.path.join("data","Menu","New_Background.png")).BD
 
 texte = General_Game_Object(os.path.join("data","Menu","Character_selection.png")).sprite
 
-P_1 = General_Game_Object(os.path.join("data","Menu","P_1.png")).sprite
-#P_1 = pygame.transform.scale(P_1, (50,40))
+P1_Fond_Waiting = General_Game_Object(os.path.join("data","Menu","P1_Waiting.png")).sprite
+P1_Fond_Waiting = pygame.transform.scale(P1_Fond_Waiting, taille_ecran)
 
-P_2 = General_Game_Object(os.path.join("data","Menu","P_2.png")).sprite
-P_2 = pygame.transform.scale(P_2, (147,90))
+P1_Fond_Ready = General_Game_Object(os.path.join("data","Menu","P1_Ready.png")).sprite
+P1_Fond_Ready = pygame.transform.scale(P1_Fond_Ready, taille_ecran)
 
-
-Fond_P1= General_Game_Object(os.path.join("data","Jeux","Fond_perso_1.png")).sprite
-Fond_P2= General_Game_Object(os.path.join("data","Jeux","Fond_perso_2.png")).sprite
-
-P1_clean = General_Game_Object(os.path.join("data","Skin","Player1_rien.png")).sprite
-P1_band = General_Game_Object(os.path.join("data","Skin","Player1.png")).sprite
-P1_spider = General_Game_Object(os.path.join("data","Skin","Player1_Spiderman.png")).sprite
+P1_Fond_Question = General_Game_Object(os.path.join("data","Menu","ValidationP1.png")).sprite
+P1_Fond_Question = pygame.transform.scale(P1_Fond_Question, taille_ecran)
 
 
-P2_clean = General_Game_Object(os.path.join("data","Skin","Player2_rien.png")).sprite
-P2_band = General_Game_Object(os.path.join("data","Skin","Player2.png")).sprite
-P2_spider = General_Game_Object(os.path.join("data","Skin","Player2_Spiderman.png")).sprite
+P2_Fond_Waiting = General_Game_Object(os.path.join("data","Menu","P2_Waiting.png")).sprite
+P2_Fond_Waiting = pygame.transform.scale(P2_Fond_Waiting, taille_ecran)
 
+P2_Fond_Ready = General_Game_Object(os.path.join("data","Menu","P2_Ready.png")).sprite
+P2_Fond_Ready = pygame.transform.scale(P2_Fond_Ready, taille_ecran)
+
+P2_Fond_Question = General_Game_Object(os.path.join("data","Menu","ValidationP2.png")).sprite
+P2_Fond_Question = pygame.transform.scale(P2_Fond_Question, taille_ecran)
+
+Valid_P1 = General_Game_Object(os.path.join("data","Menu","Ready.png")).sprite
+Valid_P2 = Valid_P1
+
+Tuto = General_Game_Object(os.path.join("data","Menu","Tuto.png")).sprite
+
+Boutons = General_Game_Object(os.path.join("data","Menu","boutons.png")).sprite
+
+ready_P2 = False #Permet de savoir si le joueur à choisi son skin
+ready_P1 = False
+connected_1 = False #Permet de faire un écran ou il faut enfoncer 2 touches pour se connecter
+connected_2 = False
+
+repeat_1 = True #Permet de empecher le spam dans le menu des skins + éviter que la boucle pour attendre se répète
+repeat_2 = True
+
+#Les differents skins
+
+P_clean = General_Game_Object(os.path.join("data","Skin","Menu","Player1_rien.png")).sprite
+P_clean = pygame.transform.scale(P_clean, taille_selection_skin)
+
+P_band = General_Game_Object(os.path.join("data","Skin","Menu","Player1.png")).sprite
+P_band = pygame.transform.scale(P_band, taille_selection_skin)
+
+P_spider = General_Game_Object(os.path.join("data","Skin","Menu","Player1_Spiderman.png")).sprite
+P_spider = pygame.transform.scale(P_spider, taille_selection_skin)
+
+
+#Tout les drapeaux
+
+flag_time_animation = 5
+ctn_flag = 0
+flag_state = 0
+
+
+Flags_Fr = [General_Game_Object(os.path.join("data","Menu","Drapeau","France","1.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","France","2.png")).sprite,
+General_Game_Object(os.path.join("data","Menu","Drapeau","France","3.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","France","4.png")).sprite,
+General_Game_Object(os.path.join("data","Menu","Drapeau","France","5.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","France","6.png")).sprite]
+
+Flags_Allm = [General_Game_Object(os.path.join("data","Menu","Drapeau","Allemagne","1.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Allemagne","2.png")).sprite,
+General_Game_Object(os.path.join("data","Menu","Drapeau","Allemagne","3.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Allemagne","4.png")).sprite,
+General_Game_Object(os.path.join("data","Menu","Drapeau","Allemagne","5.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Allemagne","6.png")).sprite]
+
+
+
+#pox_x_temp = [200, 250]
+#pos_y_temp = [900, 253] #utilisé pour déterminer la position des perso lorsqu'on les affiches dans les cases
+
+pos_x_temp = 200
+pos_y_temp = 250
 
 #Jeux
 
 #Background
-BG_1 = Background(os.path.join("data","Jeux","Fond.png")).BD
+BG_1 = Background(os.path.join("data","Jeux","Fond2.png")).BD
+Flag_pole = General_Game_Object(os.path.join("data","Jeux","Flag_pole.png")).sprite
+Flag_pole = pygame.transform.scale(Flag_pole, taille_ecran)
+
 
 # Configuration du corps de P1
-P1_Body = General_Game_Object(os.path.join("data","Jeux","P1_Body.png")).sprite
+P1_Body = General_Game_Object(os.path.join("data","Skin","Jeux","P1_Body.png")).sprite
 P1_Body = pygame.transform.scale(P1_Body, taille_joueur)
 
-P1_Arm = General_Game_Object(os.path.join("data","Jeux","P1_Arm.png")).sprite
+P1_Arm = General_Game_Object(os.path.join("data","Skin","Jeux","P1_Arm.png")).sprite
 P1_Arm = pygame.transform.scale(P1_Arm, taille_bras)
 
 
 # Configuration du corps de p2
-P2_Body = General_Game_Object(os.path.join("data","Jeux","P2_Body.png")).sprite
+P2_Body = General_Game_Object(os.path.join("data","Skin","Jeux","P2_Body.png")).sprite
 P2_Body = pygame.transform.scale(P2_Body, taille_joueur)
 
-P2_Arm = General_Game_Object(os.path.join("data","Jeux","P2_Arm.png")).sprite
+P2_Arm = General_Game_Object(os.path.join("data","Skin","Jeux","P2_Arm.png")).sprite
 P2_Arm = pygame.transform.scale(P2_Arm, taille_bras)
 
 # Configuration filet / volant

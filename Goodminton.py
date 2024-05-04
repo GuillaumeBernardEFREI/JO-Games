@@ -5,6 +5,8 @@ import math
 
 pygame.init()
 clock = pygame.time.Clock()
+cloud_font_1 = pygame.font.Font('data/Font/DCC - Cloud.otf', 200)
+text_minton_surf = cloud_font_1.render("Goodminton", True, '#96527A')
 
 while running:
 
@@ -18,84 +20,358 @@ while running:
         if keys[pygame.K_ESCAPE]:
             running = False  # Pour fermer programme
 
-        skin_P1 = 0     #défini le skin de base
-        skin_P2 = 0
+        selection_statement_P1 = 1 #tres important pour reboot le menu
+        flag_P1 = 0
+        skin_P1 = 0
+        ready_P1 = False
+        repeat_1 = True
 
-        Window.blit(pygame.transform.scale(BG_2, Window.get_size()), [0, 0])
-        Window.blit(anneaux, [400, 300])
-        Window.blit(titre, [230, 150])
+        selection_statement_P2 = 1 #same
+        flag_P2 = 0
+        skin_P2 = 0
+        ready_P2 = False
+        repeat_2 = True
 
         if keys[pygame.K_SPACE]:
             game_statement = 1
             pygame.event.wait(6000)
 
+        if C1_x >= 1111:
+            C1_x = -600
+        else:
+            C1_x += vitesse_nuage
+
+        if C2_x >= 1280:
+            C2_x = -600
+        else:
+            C2_x += vitesse_nuage
+
+        if C3_x >= 1450:
+            C3_x = -200
+        else:
+            C3_x += vitesse_nuage
+
+        if C4_x >= 730:
+            C4_x = -950
+        else:
+            C4_x += vitesse_nuage
+
+        if C5_x >= 600:
+            C5_x = -1100
+        else:
+            C5_x += vitesse_nuage
+
+        if C6_x >= 300:
+            C6_x = -1410
+        else:
+            C6_x += vitesse_nuage
 
 
-
-
-
+        Window.blit(pygame.transform.scale(BG_2, Window.get_size()), [0, 0])
+        Window.blit(anneaux, [0, 0])
+        Window.blit(text_minton_surf, [182, 150])
+        Window.blit(C1, [C1_x, C1_y - 50])
+        Window.blit(C2, [C2_x, C2_y - 50])
+        Window.blit(C3, [C3_x, C3_y - 50])
+        Window.blit(C4, [C4_x, C4_y - 50])
+        Window.blit(C5, [C5_x, C5_y - 50])
+        Window.blit(C6, [C6_x, C6_y - 50])
 
 
 
     elif game_statement == 1:
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  # Pour fermer le programme
                 running = False
         keys = pygame.key.get_pressed()
-        # Les touches :
         if keys[pygame.K_ESCAPE]:
-            running = False  # Pour fermer programme
+           running = False  # Pour fermer programme
+
+        # Menu P1 *************************************
+        if selection_statement_P1 == 1:
+            connected_1 = False
+
+            if keys[pygame.K_z]:
+                selection_statement_P1 = 2
+                no_spam_P1_2 = False
 
 
-        Window.blit(pygame.transform.scale(BG_3, Window.get_size()), [0, 0])
-        Window.blit(texte, [30, 20])
-        Window.blit(P_1, [290, 150])
-        Window.blit(P_2, [980, 153])
+        elif selection_statement_P1 == 2:
+            connected_1 = True
 
-        if keys[pygame.K_SPACE] :
+            if keys[pygame.K_q]:
+                flag_P1 -= 1
+                pygame.event.wait(300)
+
+            if keys[pygame.K_d]:
+                flag_P1 += 1
+                pygame.event.wait(300)
+
+            if keys[pygame.K_z] and no_spam_P1_2:
+                selection_statement_P1 = 3
+                no_spam_P1_3 = False #on dit au programme que l'utilisateur ne va pas pouvoir passer direct au niveau 4
+                pygame.event.wait(300)
+
+            if not no_spam_P1_2 and repeat_1:
+                repeat_1 = False
+                no_spam_P1_2 = True
+                pygame.event.wait(300)
+
+        elif selection_statement_P1 == 3:
+
+            if keys[pygame.K_q] and no_spam_P1_3:
+                skin_P1 -= 1
+                pygame.event.wait(300)
+
+            if keys[pygame.K_d] and no_spam_P1_3:
+                skin_P1 += 1
+                pygame.event.wait(300)
+
+            if keys[pygame.K_z] and no_spam_P1_3:
+                no_spam_P1_4 = False #pareil pour le niveau 4
+                selection_statement_P1 = 4
+                pygame.event.wait(300)
+
+            if keys[pygame.K_s] and no_spam_P1_3:
+                selection_statement_P1 = 2
+                pygame.event.wait(300)
+
+            if not keys[pygame.K_s]:
+                no_spam_P1_3 = True
+
+        elif selection_statement_P1 == 4:
+            ready_P1 = False
+
+            if keys[pygame.K_z] and no_spam_P1_4:
+                selection_statement_P1 = 5
+                no_spam_P1_4 = False
+                pygame.event.wait(300)
+
+            if keys[pygame.K_s] and no_spam_P1_4:
+                no_spam_P1_3 = False
+                selection_statement_P1 = 3
+                pygame.event.wait(300)
+
+            if not keys[pygame.K_z]: #Vu que ce sont des if en cascade et comme je ne peux pas laisser l'utilisateur
+            #changer les touches pour éviter le spam, je laisse l'utilisateur la possibilité de continuer
+            #seulement s'il relâche la touche 2 (ici c'est z)
+                no_spam_P1_4 = True
+
+        elif selection_statement_P1 == 5:
+            ready_P1 = True
+
+        #Menu P2 *************************************
+        if selection_statement_P2 == 1:
+            connected_2 = False #affiche ou non l'écran après une connection
+            if keys[pygame.K_UP]:
+                selection_statement_P2 = 2
+                no_spam_P2_2 = False
+
+        elif selection_statement_P2 == 2:
+            connected_2 = True
+            if keys[pygame.K_LEFT]:
+                flag_P2 -= 1
+                pygame.event.wait(300)
+
+            if keys[pygame.K_RIGHT]:
+                flag_P2 += 1
+                pygame.event.wait(300)
+
+            if keys[pygame.K_UP] and no_spam_P2_2:
+                selection_statement_P2 = 3
+                no_spam_P2_3 = False  # on dit au programme que l'utilisateur ne va pas pouvoir passer direct au niveau 4
+                pygame.event.wait(300)
+
+            if not keys[pygame.K_UP] and repeat_2:
+                repeat_2 = False
+                no_spam_P2_2 = True
+                pygame.event.wait(300)
+
+
+        elif selection_statement_P2 == 3:
+
+            if keys[pygame.K_LEFT] and no_spam_P2_3:
+                skin_P2 -= 1
+                pygame.event.wait(300)
+
+            if keys[pygame.K_RIGHT] and no_spam_P2_3:
+                skin_P2 += 1
+                pygame.event.wait(300)
+
+            if keys[pygame.K_UP] and no_spam_P2_3:
+                no_spam_P2_4 = False  # pareil pour le niveau 4
+                selection_statement_P2 = 4
+                pygame.event.wait(300)
+
+            if keys[pygame.K_DOWN] and no_spam_P2_3:
+                selection_statement_P2 = 2
+                pygame.event.wait(300)
+
+            if not keys[pygame.K_UP]:
+                no_spam_P2_3 = True
+
+        elif selection_statement_P2 == 4:
+            ready_P2 = False
+
+            if keys[pygame.K_UP] and no_spam_P2_4:
+                selection_statement_P2 = 5
+                no_spam_P2_4 = False
+                pygame.event.wait(300)
+
+            if keys[pygame.K_DOWN] and no_spam_P2_4:
+                no_spam_P2_3 = False
+                selection_statement_P2 = 3
+                pygame.event.wait(300)
+
+            if not keys[pygame.K_UP]:
+                no_spam_P2_4 = True
+
+        elif selection_statement_P2 == 5:
+            ready_P2 = True
+
+
+
+        if keys[pygame.K_SPACE] and ready_P2 and ready_P1 :
             game_statement = 2
             pygame.event.wait(6000)
 
 
-        #Selection skin Joueur 1
-        if keys[pygame.K_q]:
-            skin_P1 -= 1
+        if keys[pygame.K_q] and keys[pygame.K_d] and not connected_1:
+            connected_1 = True
 
-        if keys[pygame.K_d]:
-            skin_P1 += 1
 
-        # Selection skin Joueur 2
-        if keys[pygame.K_LEFT]:
-            skin_P1 -= 1
+        #Déroulement des drapeaux
+        if flag_P1 >= 2:
+            flag_P1 = 2
+        elif flag_P1 <= 0:
+            flag_P1 = 0
 
-        if keys[pygame.K_RIGHT]:
-            skin_P1 += 1
+        if flag_P2 >= 2:
+            flag_P2 = 2
+        elif flag_P2 <= 0:
+            flag_P2 = 0
+
+
+        if flag_P1 == 0:
+            P1_Selected_flag = Flags_Fr
+        elif flag_P1 == 1:
+            P1_Selected_flag = Flags_Allm
+        elif flag_P1 == 2:
+            P1_Selected_flag = Flags_Fr
+
+        if flag_P2 == 0:
+            P2_Selected_flag = Flags_Fr
+        elif flag_P2 == 1:
+            P2_Selected_flag = Flags_Allm
+        elif flag_P2 == 2:
+            P2_Selected_flag = Flags_Fr
+
+
+        #Déroulement des skins
+        if skin_P1 >= 2:
+            skin_P1 = 2
+        elif skin_P1 <= 0:
+            skin_P1 = 0
+
+        if skin_P2 >= 2:
+            skin_P2 = 2
+        elif skin_P2 <= 0:
+            skin_P2 = 0
 
 
         if skin_P1 == 0:
-            P1 = P1_clean
+            P1_Selected = P_clean
         elif skin_P1 == 1:
-            P1 = P1_band
-        elif skin_P1 == 2
-            P1 = P1_spider
+            P1_Selected = P_band
+        elif skin_P1 == 2:
+            P1_Selected = P_spider
 
         if skin_P2 == 0:
-            P2 = P2_clean
+            P2_Selected = P_clean
         elif skin_P2 == 1:
-            P2 = P2_band
+            P2_Selected = P_band
         elif skin_P2 == 2:
-            P2 = P2_spider
+            P2_Selected = P_spider
 
 
-        Window.blit(P1, [200, 250])
-        Window.blit(P2, [900, 253])
+        if ctn_flag >= flag_time_animation:
+            ctn_flag = 0
+            flag_state += 1
+        else:
+            ctn_flag += 1
+
+        if flag_state >= 6:
+            flag_state = 0
+
+
+        P1_flag = P1_Selected_flag[flag_state]
+        P2_flag = P2_Selected_flag[flag_state]
+
+
+        if connected_1:
+            Fond_P1 = P1_Fond_Ready
+        else:
+            Fond_P1 = P1_Fond_Waiting
+
+        if connected_2:
+            Fond_P2 = P2_Fond_Ready
+        else:
+            Fond_P2 = P2_Fond_Waiting
+
+
+        #tuto
+        if keys[pygame.K_k]:
+            pos_x_temp += 1
+
+        if keys[pygame.K_h]:
+            pos_x_temp -= 1
+
+        if keys[pygame.K_u]:
+            pos_y_temp -= 1
+
+        if keys[pygame.K_j]:
+            pos_y_temp += 1
 
 
 
+        Window.blit(pygame.transform.scale(BG_3, Window.get_size()), [0, 0])
+        Window.blit(texte, [30, 20])
+
+        Window.blit(Fond_P1, [0, 0])
+        Window.blit(Fond_P2, [0, 0])
+
+        print(pos_x_temp, pos_y_temp)
+        if connected_1 or connected_2:
+            Window.blit(Tuto, [276, 146])
+
+        if selection_statement_P1 == 4 or ready_P1:
+            Window.blit(P1_Fond_Question, [-5, -2])
+        if selection_statement_P2 == 4 or ready_P2:
+            Window.blit(P2_Fond_Question, [6, -4])
+
+        if ready_P1 :
+            Window.blit(Valid_P1 , [652, 519])
+
+        if ready_P2:
+            Window.blit(Valid_P2, [1378, 519])
 
 
+        if connected_1 :
+            Window.blit(P1_flag, [-105, -1])
+            Window.blit(P1_Selected, [38, 549])
+            if selection_statement_P1 == 2 :
+                Window.blit(Boutons, [-105, -1])
+            elif selection_statement_P1 == 3 :
+                Window.blit(Boutons, [-270, 490])
 
-
+        if connected_2:
+            Window.blit(P2_flag, [615, -1])
+            Window.blit(P2_Selected, [768, 549])
+            if selection_statement_P2 == 2 :
+                Window.blit(Boutons, [615, -1])
+            elif selection_statement_P2 == 3 :
+                Window.blit(Boutons, [455, 490])
 
 
 
@@ -158,6 +434,8 @@ while running:
 
     #VOLANNNNT
 
+
+
         if keys[pygame.K_SPACE]:
             Actif = True
             pos_y3, pos_x3 = 360, 540
@@ -165,10 +443,13 @@ while running:
             en_saut_volant_G = False
             volant_force = -14.5
             GRAVITE_volant = GRAVITE
-            volant_speed = walk_speed * 1.5
+            volant_speed = 14
             vitesse_x3 = 0
+            one_time1 = True
+            one_time2 = True
             smash_P2 = False
             smash_P1 = False
+            Contact = False
 
         if en_saut_volant_G:
             pos_y3 += volant_speed
@@ -240,6 +521,20 @@ while running:
 
         # **********************************************************************
 
+        #Animation drapeau des pays:
+        if ctn_flag >= flag_time_animation:
+            ctn_flag = 0
+            flag_state += 1
+        else:
+            ctn_flag += 1
+
+        if flag_state >= 6:
+            flag_state = 0
+
+
+        P1_flag = P1_Selected_flag[flag_state]
+        P2_flag = P2_Selected_flag[flag_state]
+
     # ************** Limites du terrain ***********
     # Horizontalement
         if pos_y1<130:
@@ -280,26 +575,28 @@ while running:
         rect_vol = volant.get_rect(topleft=(pos_y3, pos_x3))
         rect_vol_rotated = volant_rotated.get_rect(topleft=(pos_y3, pos_x3))
 
-        if (mask_p1.overlap(mask_vol, (rect_vol.x - rect_p1.x, rect_vol.y - rect_p1.y)) or mask_p1.overlap(mask_vol_rotated, (rect_vol_rotated.x - rect_p1.x, rect_vol_rotated.y - rect_p1.y))) and Actif and rotation_in_progress1 and test1 != 1:
+        if (mask_p1.overlap(mask_vol, (rect_vol.x - rect_p1.x, rect_vol.y - rect_p1.y)) or mask_p1.overlap(mask_vol_rotated, (rect_vol_rotated.x - rect_p1.x, rect_vol_rotated.y - rect_p1.y))) and Actif and rotation_in_progress1 and test1 != 1 and one_time1:
+            one_time1 = False
+            one_time2 = True
+            Contact = True
             en_saut_volant_G = True
             en_saut_volant_D = False
             smash_P2 = False
-            vitesse_x3 = volant_force
+
+            if en_saut1:
+                smash_P1 = True
 
             if not Do_a_flip:
                 volant = pygame.transform.flip(volant, False, True)
                 Do_a_flip = True
 
-            if en_saut1:
-                smash_P1 = True
-
-
-
-        if (mask_p2.overlap(mask_vol, (rect_vol.x - rect_p2.x, rect_vol.y - rect_p2.y)) or mask_p2.overlap(mask_vol_rotated, (rect_vol_rotated.x - rect_p2.x, rect_vol_rotated.y - rect_p2.y))) and Actif and rotation_in_progress2 and test2 != 1 :
+        if (mask_p2.overlap(mask_vol, (rect_vol.x - rect_p2.x, rect_vol.y - rect_p2.y)) or mask_p2.overlap(mask_vol_rotated, (rect_vol_rotated.x - rect_p2.x, rect_vol_rotated.y - rect_p2.y))) and Actif and rotation_in_progress2 and test2 != 1 and one_time2:
+            one_time2 = False
+            one_time1 = True
+            Contact = True
             en_saut_volant_D = True
             en_saut_volant_G = False
             smash_P1 = False
-            vitesse_x3 = volant_force
 
             if en_saut2:
                 smash_P2 = True
@@ -308,22 +605,31 @@ while running:
                 volant = pygame.transform.flip(volant, False, True)
                 Do_a_flip = False
 
-
-
-        if (smash_P2 or smash_P1) and (en_saut_volant_G or en_saut_volant_D):
-            volant_force = -5
-            volant_speed = walk_speed * 2.8
-        else :
+        if  smash_P2 or smash_P1:
+            volant_force = -3
+            volant_speed = 25
+        else:
             volant_force = - 14.5
-            volant_speed = walk_speed * 1.5
+            volant_speed = 10
+
+        if (en_saut_volant_D or en_saut_volant_G) and Contact:
+            vitesse_x3 = volant_force
+            Contact = False
 
 
         # ****************************************************
+
+
 
         # ************ Dessiner le perso à sa nouvelle position ************
 
     # Filet au bon endroit
         Window.blit(filet, [700, 550])
+
+    # On affiche le drapeau des joueurs sur les côtés
+        Window.blit(Flag_pole, [-4, 0])
+        Window.blit(P1_flag, [-311, 245])
+        Window.blit(P2_flag, [820, 244])
 
     # Player 1
         Window.blit(P1_Body,[pos_y1,pos_x1]) # On déplace P1 à ses nouvelles coordonnées
@@ -348,18 +654,7 @@ while running:
             else:
                 Window.blit(volant, [pos_y3, pos_x3])
 
-
-
 #********************************************************
-
-
-
-#*************** Modération ***************
-#
-#   print(f"[{pos_x1:2f},{pos_y2:2f}]")
-#
-#******************************************
-
 
 
 #****** End of while loop *********
