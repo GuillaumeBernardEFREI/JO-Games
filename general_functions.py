@@ -4,6 +4,9 @@ import os
 import game1 as g1
 
 def init() -> dict:
+    """
+    Function to create the variables used in main.
+    """
     var={}
     size=(420,420)
     sc=gc.Screen(size,"JO-Games")
@@ -24,23 +27,37 @@ def init() -> dict:
                   "game-6":gc.General_Game_Object(os.path.join("data","basket.png")).sprite}
 
     
-    var["Win"],var["gamesep"],var["display_Games"],var["disp_Background"]=all_resize(size,var["Sizes"],var["Games"],var["Background"])
+    var["Win"],var["gamesep"],var["display_Games"],var["disp_Background"],var["gamepos"]=all_resize(size,var["Sizes"],var["Games"],var["Background"])
     #i am using display variables to not loose resolution by resizing multiple time the same image. 
-    var["gamepos"]=gamespos(var["gamesep"])
     return var
 
-def win_resize(size):
+def win_resize(size:pg.rect) -> pg.display:
+    """
+    Function which recreates the screen every time the window is resized.
+    This is a seemless transition.
+    """
     sc=gc.Screen(size,"JO-Games")
     return sc.win
 
-def all_resize(size,Sizes,games,BG):
+def all_resize(size:tuple[int,int],Sizes:dict[int],games:dict[gc.General_Game_Object],BG:gc.Background) -> tuple:
+    """
+    Functions which recalls all the functions to get back the "hard-codded" coordonates of everything.
+    No matter the size of the screen.
+    
+    This function is called every time the window is resized.
+    """
     gamesep=resize_gamesep(Sizes,size)
     sc=win_resize(size)
     games=resize_game_obj(games,gamesep)
     BG=pg.transform.scale(BG,size)
-    return sc,gamesep,games,BG
+    gamepos=gamespos(gamesep)
+    return sc,gamesep,games,BG,gamepos
 
-def resize_gamesep(Sizes,winsize):
+def resize_gamesep(Sizes:dict[int],winsize:pg.rect) -> dict[float]:
+    """
+    Function to create/remake the gamesep variable which chooses the distance
+    between the different games.
+    """
     gamesep=dict()
     multiplier_x=winsize[0]/Sizes["max_x"]
     multiplier_y=winsize[1]/Sizes["max_y"]
@@ -53,19 +70,18 @@ def resize_gamesep(Sizes,winsize):
     gamesep["sep-y"]=Sizes["sep-y"]*multiplier_y
     return gamesep
 
-def resize_game_obj(games,gamesep):
+def resize_game_obj(games:dict[gc.General_Game_Object],gamesep:dict[float]) -> dict[gc.General_Game_Object]:
+    """
+    Function to resize all the given games
+    """
     for game in games:
         games[game]=pg.transform.scale(games[game],(gamesep["game-x"],gamesep["game-y"]))
     return games
 
-def display_size(win_size:pg.Rect,obj_size:pg.Rect): 
-    #The calculations are done on a 10k by 10k board
-    #and here we calculate the position in which the object should be drawn of the screen
-    pos_x=obj_size.x*win_size.x/10000
-    pos_y=obj_size.y*win_size.y/10000
-    return (pos_x,pos_y)
-
-def display_games(win,games:dict[str:gc.General_Game_Object],Sizes:dict[str:int]):
+def display_games(win:pg.display,games:dict[str:gc.General_Game_Object],Sizes:dict[str:int]) -> None:
+    """
+    Function which displays (in the window) all the games inside 'games' variable.
+    """
     posx=Sizes["sep-x"]
     posy=Sizes["sep-y"]
     for game in games:
@@ -80,7 +96,10 @@ def display_games(win,games:dict[str:gc.General_Game_Object],Sizes:dict[str:int]
             posx=Sizes["sep-x"]
             posy+=Sizes["sep-y"]+Sizes["game-y"]
 
-def gamespos(gamesep):
+def gamespos(gamesep) -> list[tuple[float,float]]:
+    """
+    Function called to find the position at which every game should be blitted to.
+    """
     L=[]
     posx=gamesep["sep-x"]
     posy=gamesep["sep-y"]
@@ -96,7 +115,10 @@ def gamespos(gamesep):
             posy+=gamesep["sep-y"]+gamesep["game-y"]
     return L 
 
-def checkcolision(mousepos,Games,gamepos):
+def checkcolision(mousepos:tuple[float,float],Games:dict[str:gc.General_Game_Object],gamepos:list[tuple[float,float]]) -> None:
+    """
+    Function to verify if the player clicks on a game.
+    """
     i=0
     for game in Games:
         rect=Games[game].get_rect()
@@ -116,5 +138,4 @@ def checkcolision(mousepos,Games,gamepos):
             if game=="game-6":
                 print("g6")
         i+=1
-    return 0
 

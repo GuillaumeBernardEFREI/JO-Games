@@ -1,4 +1,3 @@
-from typing import Any
 import pygame as pg
 
 class Screen(pg.Surface):
@@ -8,7 +7,7 @@ class Screen(pg.Surface):
         self.win.fill((0,0,0))
         pg.display.set_caption(title)
 
-    def rename(self,title):
+    def rename(self,title:str) -> None:
         pg.display.set_caption(title)
 
     def update(self):
@@ -26,9 +25,9 @@ class General_Game_Object(pg.sprite.Sprite):
         if "resize" in kargs:
             self.resize(kargs['resize'])
 
-    def resize(self,values):
+    def resize(self,values:tuple[float,float]):
         self.sprite = pg.transform.scale(self.sprite,values)
 
-    def rect(self):
+    def rect(self) -> pg.rect:
         return self.sprite.get_rect()
     #rect is the position of the sprite.

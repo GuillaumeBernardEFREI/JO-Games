@@ -11,7 +11,7 @@ pg.init()
 while var["Running"]:
     for event in pg.event.get():
         if event.type == pg.VIDEORESIZE:
-            var["Win"],var["gamesep"],var["display_Games"],var["disp_Background"]=gf.all_resize(event.size,var["Sizes"],var["Games"],var["Background"])
+            var["Win"],var["gamesep"],var["display_Games"],var["disp_Background"],var["gamepos"]=gf.all_resize(event.size,var["Sizes"],var["Games"],var["Background"])
             # redraw win in new size
         if event.type == pg.QUIT:
             var["Running"]=False
@@ -26,5 +26,4 @@ while var["Running"]:
 #End of the loop.
 
 
-pg.mouse.get_pressed()
 pg.quit()
