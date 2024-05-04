@@ -1,6 +1,6 @@
 import pygame
 from math import *
-import ran_gen as rg
+import shooting.ran_gen as rg
 
 class Screen(pygame.Surface):
     def __init__(self):

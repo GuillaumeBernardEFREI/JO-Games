@@ -2,6 +2,7 @@ import generic_classes as gc
 import pygame as pg
 import os
 import game1 as g1
+import shooting.rvpd_shooting as sh
 
 def init() -> dict:
     """
@@ -21,7 +22,7 @@ def init() -> dict:
     var["Background"]=gc.Background(os.path.join("data","size.png")).BG
     var["Games"]={"game-1":gc.General_Game_Object(os.path.join("data","basket.png")).sprite,
                   "game-2":gc.General_Game_Object(os.path.join("data","basket.png")).sprite,
-                  "game-3":gc.General_Game_Object(os.path.join("data","basket.png")).sprite,
+                  "game-3":gc.General_Game_Object(os.path.join("data","shooting.jpg")).sprite,
                   "game-4":gc.General_Game_Object(os.path.join("data","basket.png")).sprite,
                   "game-5":gc.General_Game_Object(os.path.join("data","basket.png")).sprite,
                   "game-6":gc.General_Game_Object(os.path.join("data","basket.png")).sprite}
@@ -115,7 +116,7 @@ def gamespos(gamesep) -> list[tuple[float,float]]:
             posy+=gamesep["sep-y"]+gamesep["game-y"]
     return L 
 
-def checkcolision(mousepos:tuple[float,float],Games:dict[str:gc.General_Game_Object],gamepos:list[tuple[float,float]]) -> None:
+def checkcolision(mousepos:tuple[float,float],Games:dict[str:gc.General_Game_Object],gamepos:list[tuple[float,float]]) -> int:
     """
     Function to verify if the player clicks on a game.
     """
@@ -126,16 +127,38 @@ def checkcolision(mousepos:tuple[float,float],Games:dict[str:gc.General_Game_Obj
         rect.y=gamepos[i][1]
         if rect.collidepoint(mousepos):
             if game=="game-1":
-                print("g1")
+                return 1
             if game=="game-2":
-                print("g2")
+                return 2
             if game=="game-3":
-                print("g3")
+                return 3
             if game=="game-4":
-                print("g4")
+                return 4
             if game=="game-5":
-                print("g5")
+                return 5
             if game=="game-6":
-                print("g6")
+                return 6
         i+=1
+    return 0 #did not click a game
 
+def play_game(game:int,screen:pg.display,fps:int) -> bool:
+    """
+    Function to call the games clicked
+    So that The check collision doesn't have too many variables.
+
+    Returns a bool, false to say that you continue or True to say to close the screen.
+    """
+    if game==1:
+        g1.game1()
+    elif game==2:
+        print("2")
+    elif game==3:
+        if (sh.game_shooting(screen,fps)==True):
+            return True
+    elif game==4:
+        print("4")
+    elif game==5:
+        print("5")
+    elif game==6:
+        print("6")
+    return False

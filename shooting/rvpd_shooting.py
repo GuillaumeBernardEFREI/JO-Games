@@ -1,8 +1,8 @@
 import os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] ="hide" #to hide the ad message pygame prints.
 import pygame
-import cleaned_class as cc
-import functions
+import shooting.cleaned_class as cc
+import shooting.functions as func
 
 def init(scr_rect:pygame.rect) -> dict:
     font=pygame.font.SysFont('Corbel',50)
@@ -24,7 +24,7 @@ def init(scr_rect:pygame.rect) -> dict:
             }
          }
     var.update({ #adding all the sprites which needs the constant in var.
-        "BG":functions.resize(cc.Background(os.path.join("shooting","data","greenfield.jpg")).BD,(var["rect"].right,var["rect"].bottom)),
+        "BG":func.resize(cc.Background(os.path.join("shooting","data","greenfield.jpg")).BD,(var["rect"].right,var["rect"].bottom)),
         })
     return var
 
@@ -33,24 +33,29 @@ def init(scr_rect:pygame.rect) -> dict:
 
 
 def game_shooting(Screen:cc.Screen,fps:int):
-    var=init(Screen.screen.get_rect())
+    var=init(Screen.get_rect())
+    time=0
     while not var["quit"]: #Game Loop
         keys=pygame.key.get_pressed()
+        time+=1/fps
         if var["menu"]: #the menu
-            Screen.screen.blit(var["BG"],[0,0])
-            Screen.screen.fill("grey", special_flags=pygame.BLEND_RGBA_MIN)#make the translucent overlay.
+            Screen.blit(var["BG"],[0,0])
+            Screen.fill("grey", special_flags=pygame.BLEND_RGBA_MIN)#make the translucent overlay.
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:#When the big Red X at the top right is clicked
                     var["quit"]=True
+                    return True
                 if event.type == pygame.VIDEORESIZE:
-                    var["rect"]=Screen.screen.get_rect()
-                    var["BG"]=functions.resize(var["BG"],(var["rect"].right,var["rect"].bottom))
+                    var["rect"]=Screen.get_rect()
+                    var["BG"]=func.resize(var["BG"],(var["rect"].right,var["rect"].bottom))
 
-            if keys[pygame.K_ESCAPE] :
+            if keys[pygame.K_ESCAPE] and time>0.25:
                 var["quit"]=True
 
-            if pygame.mouse.get_pressed()[0] and pygame.mouse.get_focused():
+            if pygame.mouse.get_pressed()[0] and pygame.mouse.get_focused() and time>0.5:
+                #the time condition is so that two actions (clicking on the game and starting playing)
+                #Do happen on the same click.
                 var["menu"]=False
                 time=0
                 sprite=[]
@@ -62,21 +67,26 @@ def game_shooting(Screen:cc.Screen,fps:int):
                 #initiate the launch. (reset the variables)
             for i in range(0,len(var["menu_obj"]["help-txt"])):
                 blit_location=[100,20+i*60]
-                Screen.screen.blit(var["menu_obj"]["help-txt"][i],blit_location)
+                Screen.blit(var["menu_obj"]["help-txt"][i],blit_location)
                 
         else : #the game itself
-            Screen.screen.blit(var["BG"],[0,0])
+            Screen.blit(var["BG"],[0,0])
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:#When the big Red X at the top right is clicked
                     var["quit"]=True
+                    return True
+                if event.type == pygame.VIDEORESIZE:
+                    var["rect"]=Screen.get_rect()
+                    var["BG"]=func.resize(var["BG"],(var["rect"].right,var["rect"].bottom))
             if keys[pygame.K_ESCAPE] :
                 var["menu"]=True
+                time=0
                 #Add text with best score?
             
             sp_cd+=1/fps
             time+=1/fps
             if sp_cd>=sp_time:#make new ufos spawn
-                sprite.append(functions.load(var["rect"]))
+                sprite.append(func.load(var["rect"]))
                 sp_cd=0
 
             #make it harder as the game is played.
@@ -92,17 +102,18 @@ def game_shooting(Screen:cc.Screen,fps:int):
                     sprite.remove(sp)
                     destroyed+=1
                 sp.move(fps,var["rect"])
-                sp.draw(Screen.screen)
+                sp.draw(Screen)
                 if sp.check(var["rect"]): 
                     sprite.remove(sp)
                     missed+=1
 
             score=var["font"].render(f"Kill count: {destroyed}/{destroyed+missed}",True,"black")
-            Screen.screen.blit(score,[var["rect"].right-400,50])
+            Screen.blit(score,[var["rect"].right-400,50])
 
         var["clock"].tick(fps)
         pygame.display.update()
         #end of the loop
+    return False
 
 
 

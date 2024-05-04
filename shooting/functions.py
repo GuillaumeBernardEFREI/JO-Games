@@ -1,5 +1,5 @@
 import pygame
-import cleaned_class as cc
+import shooting.cleaned_class as cc
 import os
 
 def resize(obj:pygame.sprite,size:pygame.rect) -> pygame.sprite:
