@@ -2,7 +2,8 @@ import generic_classes as gc
 import pygame as pg
 import os
 import game1 as g1
-import shooting.rvpd_shooting as sh
+import shooting.rvpd_shooting as shooting
+import basketball.main as basketball
 
 def init() -> dict:
     """
@@ -23,9 +24,7 @@ def init() -> dict:
     var["Games"]={"game-1":gc.General_Game_Object(os.path.join("data","basket.png")).sprite,
                   "game-2":gc.General_Game_Object(os.path.join("data","basket.png")).sprite,
                   "game-3":gc.General_Game_Object(os.path.join("data","shooting.jpg")).sprite,
-                  "game-4":gc.General_Game_Object(os.path.join("data","basket.png")).sprite,
-                  "game-5":gc.General_Game_Object(os.path.join("data","basket.png")).sprite,
-                  "game-6":gc.General_Game_Object(os.path.join("data","basket.png")).sprite}
+                  "game-4":gc.General_Game_Object(os.path.join("data","basket.png")).sprite}
 
     
     var["Win"],var["gamesep"],var["display_Games"],var["disp_Background"],var["gamepos"]=all_resize(size,var["Sizes"],var["Games"],var["Background"])
@@ -151,9 +150,11 @@ def play_game(game:int,screen:pg.display,fps:int) -> bool:
     if game==1:
         g1.game1()
     elif game==2:
-        print("2")
+        screen=win_resize((950, 600))#hard coded in the game code.
+        screen.fill("black")# to not have unwanted image continue beeing seen.
+        basketball.basketball(screen)
     elif game==3:
-        if (sh.game_shooting(screen,fps)==True):
+        if (shooting.game_shooting(screen,fps)==True):
             return True
     elif game==4:
         print("4")
