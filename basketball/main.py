@@ -37,9 +37,11 @@ def display_score_menu(screen):
                 exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    return True #quit the game to the big menu
-
+                    return True  # quit the game to the big menu
+        # Render the score text
+        score_text = var.score_font2.render("{}".format(var.score), True, var.color)
         screen.blit(var.score_menu_surf, var.score_menu_rect)
+        screen.blit(score_text, (410, 200))
         pygame.display.update()
 
 
@@ -200,7 +202,7 @@ def basketball(screen):
         var.clock.tick(60)
         pygame.display.update()
         # Display score menu when time reaches 80 seconds
-        if current_time // 1000 == 10 and current_time != var.last_score_menu_time:
+        if current_time // 1000 == 60 and current_time != var.last_score_menu_time:
             display_score_menu(screen)
             var.last_score_menu_time = current_time
             var.clock.tick(60)

@@ -86,6 +86,7 @@ score = 0
 my_font = pygame.font.SysFont('Comic Sans MS', 30)
 my_font_1 = pygame.font.SysFont('Comic Sans MS', 50)
 score_font = pygame.font.Font(os.path.join("basketball","assets","font_score.TTF"),50)
+score_font2 = pygame.font.Font(os.path.join("basketball","assets","font_score.TTF"),80)
 text_font = pygame.font.Font(os.path.join("basketball","assets","font_score.TTF"),30)
 text1 = text_font.render("Angle : {}".format(angle), True,color)
 text2 = text_font.render("Speed : {}".format(speed), True,color)
