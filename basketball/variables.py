@@ -9,9 +9,10 @@ clock = pygame.time.Clock()
 # all image(sprite) initialisation :
 screen = pygame.display.set_mode((950, 600))
 
-
 menu_surf = pygame.transform.scale(pygame.image.load(os.path.join("basketball","assets","Menu.png")).convert_alpha(), (950, 600))
 menu_rect = menu_surf.get_rect(topleft=(0, 0))
+score_menu_surf = pygame.transform.scale(pygame.image.load(os.path.join("basketball","assets","score_menu.png")).convert_alpha(), (950, 600))
+score_menu_rect = score_menu_surf.get_rect(topleft=(0, 0))
 play_button_surf=pygame.transform.scale(pygame.image.load(os.path.join("basketball","assets","Play_button.png")).convert_alpha(), (230, 100))
 play_button_rect=play_button_surf.get_rect(center=(475, 230))
 score_back_surf = pygame.transform.scale(pygame.image.load(os.path.join("basketball","assets","score back.png")).convert_alpha(),(100,50))
@@ -58,8 +59,9 @@ mass = 100
 time = 0
 time2 = 0
 time3 = 0
+shoot_time=0
 retention = 0.95
-retention2 = 0.70
+retention2 = 0.68
 gravity = 0.5
 shoot = False
 angle = 10.0
@@ -68,6 +70,9 @@ memo_speed=speed
 trajectory = False
 bouncetest = False
 played_test = False
+number_of_point = 70
+last_action_time = 0
+last_score_menu_time = 0
 #  parameters for gauge
 a=1
 b=-1
@@ -87,7 +92,6 @@ text2 = text_font.render("Speed : {}".format(speed), True,color)
 
 # sound variables
 pygame.mixer.init()
-
 bounce_sound = pygame.mixer.Sound(os.path.join("basketball","assets","basketball-ball-hard-hit.wav"))
 ball_Sound = pygame.mixer.Sound(os.path.join("basketball","assets","throw_sound.wav"))
 ball_Sound.set_volume(0.5)  # Set volume to 50%

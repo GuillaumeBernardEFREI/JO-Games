@@ -28,15 +28,36 @@ def game_menu(screen):
         screen.blit(var.menu_surf, var.menu_rect)
         screen.blit(var.play_button_surf, var.play_button_rect)
         pygame.display.update()
+def display_score_menu(screen):
+    menu_running = True
+    while menu_running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return True #quit the game to the big menu
+
+        screen.blit(var.score_menu_surf, var.score_menu_rect)
+        pygame.display.update()
+
 
 def basketball(screen):
     if (game_menu(screen)):  # Call the menu before starting the game loop
-        #test to exit inside the game menu.
+        #  test to exit inside the game menu.
         return
 
     var.running = True
     var.game_active = True
+
     while var.running == True:
+        current_time = pygame.time.get_ticks()
+        elapsed_time = (current_time - var.shoot_time) // 1000
+        animation_index = (current_time // var.animation_speed) % len(var.player_animation_surf)
+        if elapsed_time % 2 == 0 and elapsed_time != 0 and elapsed_time != var.last_action_time and var.number_of_point > 20:  # Make the preview of trajectory less and less precise if the player don't get point
+            var.number_of_point = var.number_of_point - 10
+            var.last_action_time = elapsed_time
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 var.running = False
@@ -63,7 +84,7 @@ def basketball(screen):
 
         var.back_ground_surf = pygame.transform.scale(pygame.image.load(os.path.join("basketball","assets","basketball court.png")).convert_alpha(),(950, 600))
 
-        for time2 in range(0,60,3):
+        for time2 in range(0,var.number_of_point,3):
             if var.bouncetest == False:
                 var.x_pre = (var.x_ini + math.cos(math.radians(var.angle)) * var.speed * time2)
                 var.y_pre = (var.y_ini - (math.sin(math.radians(var.angle)) * var.speed * time2) + 0.5 * var.gravity * time2 ** 2)
@@ -87,10 +108,7 @@ def basketball(screen):
             var.x_val = (var.x_ini + math.cos(math.radians(var.angle)) * var.speed * var.time)
             var.y_val = (var.y_ini - (math.sin(math.radians(var.angle)) * var.speed * var.time) + 0.5 * var.gravity * var.time ** 2)
 
-            if var.y_val + var.ball_surf.get_height() >= var.back_ground_surf.get_height() + 10 or \
-                    var.ball_rect.colliderect(var.hitbox_hopper_rect1) or \
-                    var.ball_rect.colliderect(var.hitbox_hopper_rect2) or \
-                    var.ball_rect.colliderect(var.hitbox_hopper_rect3):
+            if var.y_val + var.ball_surf.get_height() >= var.back_ground_surf.get_height():
                 # Implement bounce
                 var.bounce_sound.play()
                 var.bouncetest=True
@@ -114,6 +132,8 @@ def basketball(screen):
                 var.time = 0
             if var.ball_rect.colliderect(var.hitbox_score_rect) and var.played_test==False :
                 var.win_sound.play()
+                var.shoot_time = current_time
+                var.number_of_point = 70
                 var.played_test=True
                 var.angle = 0.0
                 var.speed = var.memo_speed
@@ -134,10 +154,10 @@ def basketball(screen):
             elif var.x_val + var.ball_surf.get_width() >= var.back_ground_surf.get_width() or var.bounce_count>=3:
                 # Reset ball position and shoot
                 var.loose_sound.play()
+                var.shoot_time = current_time
                 var.shoot = False
                 var.angle = 0.0
                 var.speed = var.memo_speed
-                var.player_rect.midbottom = (random.randint(100, 400),480)
                 var.x_ini = var.player_rect.x + 70
                 var.y_ini = var.player_rect.y + 90
                 var.x_val = var.player_rect.x + 70
@@ -150,6 +170,7 @@ def basketball(screen):
                 var.c = var.a
                 var.ball_rect.center = (var.player_rect.x , var.player_rect.y )
             var.time += 1  # Increment time
+
         text3 = var.score_font.render("{}".format(var.score), True, 'black')
         var.ball_rect.center = (var.x_val, var.y_val)
 
@@ -159,8 +180,6 @@ def basketball(screen):
         screen.blit(var.hitbox_hooper_surf,var.hitbox_hopper_rect2)
         screen.blit(var.hitbox_hooper_surf,var.hitbox_hopper_rect1)
         screen.blit(var.back_ground_surf, var.back_ground_rect)
-        current_time = pygame.time.get_ticks()
-        animation_index = (current_time // var.animation_speed) % len(var.player_animation_surf)
         screen.blit(var.player_animation_surf[animation_index], var.player_rect)
         screen.blit(var.hopper_surf, var.hopper_rect)
         screen.blit(var.ball_surf, var.ball_rect)
@@ -170,7 +189,8 @@ def basketball(screen):
         screen.blit(text3, (430,100))
         screen.blit(var.text1, (20, 510))
         screen.blit(var.text2, (30, 470))
-
+        time_text = var.text_font.render("Time : {}".format(current_time//1000), True, var.color)
+        screen.blit(time_text, (690,540))
         """pygame.draw.rect(screen, 'Green', hopper_rect, 5)
         pygame.draw.rect(screen, 'Red', hitbox_hopper_rect1,5)
         pygame.draw.rect(screen,'Red',hitbox_hopper_rect2,5)
@@ -179,3 +199,10 @@ def basketball(screen):
         var.trajectory = False
         var.clock.tick(60)
         pygame.display.update()
+        # Display score menu when time reaches 80 seconds
+        if current_time // 1000 == 10 and current_time != var.last_score_menu_time:
+            display_score_menu(screen)
+            var.last_score_menu_time = current_time
+            var.clock.tick(60)
+            current_time = 0
+            return

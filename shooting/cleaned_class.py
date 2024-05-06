@@ -97,7 +97,7 @@ class Trajectory:
     #    x = horizontal motion
     #    y = vertical motion
 
-    def position(self,time,fixed:bool=False,screen_size:tuple|None=None) -> list:
+    def position(self,time,fixed:bool=False,screen_size:tuple=None) -> list:
         x=self.ax*(time**2)+self.bx*time
         y=self.ay*(time**2)+self.by*time
         if fixed: #The equation will be fixed to be calculated in a 10k*10k radius (only positive)
@@ -111,7 +111,7 @@ class Trajectory:
         y+=self.cy
         return [x,y]
     
-    def trajectory(self,nbpoints:int,starttime=0,maxtime=60,fixed:bool=False,screen_size:tuple|None=None)-> list[list]:
+    def trajectory(self,nbpoints:int,starttime=0,maxtime=60,fixed:bool=False,screen_size:tuple=None)-> list[list]:
         #maxtime is in seconds
         values=list()
         for i in range(starttime,nbpoints+1): #from time=0 to time=maxtime 
