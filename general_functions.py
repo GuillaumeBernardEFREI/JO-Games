@@ -21,10 +21,10 @@ def init() -> dict:
     var["Sizes"]={"max_x":10000,"max_y":10000,"game-x":2500,"game-y":3500,"sep-x":625,"sep-y":1000}
 
     var["Background"]=gc.Background(os.path.join("data","size.png")).BG
-    var["Games"]={"game-1":gc.General_Game_Object(os.path.join("data","basket.png")).sprite,
-                  "game-2":gc.General_Game_Object(os.path.join("data","basket.png")).sprite,
-                  "game-3":gc.General_Game_Object(os.path.join("data","shooting.jpg")).sprite,
-                  "game-4":gc.General_Game_Object(os.path.join("data","basket.png")).sprite}
+    var["Games"]={"game-1":gc.General_Game_Object(os.path.join("data","basket.png")),
+                  "game-2":gc.General_Game_Object(os.path.join("data","basket.png")),
+                  "game-3":gc.General_Game_Object(os.path.join("data","shooting.jpg")),
+                  "game-4":gc.General_Game_Object(os.path.join("data","basket.png"))}
 
     
     var["Win"],var["gamesep"],var["display_Games"],var["disp_Background"],var["gamepos"]=all_resize(size,var["Sizes"],var["Games"],var["Background"])
@@ -75,7 +75,7 @@ def resize_game_obj(games:dict[gc.General_Game_Object],gamesep:dict[float]) -> d
     Function to resize all the given games
     """
     for game in games:
-        games[game]=pg.transform.scale(games[game],(gamesep["game-x"],gamesep["game-y"]))
+        games[game].resize((gamesep["game-x"],gamesep["game-y"]))
     return games
 
 def display_games(win:pg.display,games:dict[str:gc.General_Game_Object],Sizes:dict[str:int]) -> None:
@@ -86,7 +86,7 @@ def display_games(win:pg.display,games:dict[str:gc.General_Game_Object],Sizes:di
     posy=Sizes["sep-y"]
     for game in games:
         #games[game].get_rect().
-        win.blit(games[game],[posx,posy])
+        win.blit(games[game].sprite,[posx,posy])
         posx+=Sizes["game-x"]
         posx+=Sizes["sep-x"]
         if posy>=Sizes["max_y"]:
@@ -121,7 +121,7 @@ def checkcolision(mousepos:tuple[float,float],Games:dict[str:gc.General_Game_Obj
     """
     i=0
     for game in Games:
-        rect=Games[game].get_rect()
+        rect=Games[game].sprite.get_rect()
         rect.x=gamepos[i][0]
         rect.y=gamepos[i][1]
         if rect.collidepoint(mousepos):
