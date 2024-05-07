@@ -52,9 +52,11 @@ def basketball(screen):
 
     var.running = True
     var.game_active = True
+    start_time = pygame.time.get_ticks()
+    var.score = 0
 
     while var.running == True:
-        current_time = pygame.time.get_ticks()
+        current_time = pygame.time.get_ticks() - start_time
         elapsed_time = (current_time - var.shoot_time) // 1000
         animation_index = (current_time // var.animation_speed) % len(var.player_animation_surf)
         if elapsed_time % 2 == 0 and elapsed_time != 0 and elapsed_time != var.last_action_time and var.number_of_point > 20:  # Make the preview of trajectory less and less precise if the player don't get point
