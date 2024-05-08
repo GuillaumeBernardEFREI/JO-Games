@@ -11,6 +11,7 @@ This is a basic basketball game created with Pygame. The player controls the ang
 - Adjust the angle and power of the shot.
 - Realistic ball physics with bounce and gravity.
 - Simple menu system.
+- score appear after 60 seconds of play
 
 ## Getting Started
 
