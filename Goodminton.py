@@ -6,7 +6,18 @@ import math
 pygame.init()
 clock = pygame.time.Clock()
 cloud_font_1 = pygame.font.Font('data/Font/DCC - Cloud.otf', 200)
+normal_font = pygame.font.Font('data/Font/Light Stories.otf', 100)
+small_font = pygame.font.Font('data/Font/Light Stories.otf', 40)
+pixel_font = pygame.font.Font('data/Font/Rémi.ttf', 40)
+
 text_minton_surf = cloud_font_1.render("Goodminton", True, '#96527A')
+text_menu = normal_font.render("Select your character", True, '#00353F')
+text_waiting = small_font.render("Waiting on :     /", True, '#00353F')
+text_P1_waiting = small_font.render("P1", True, '#00353F')
+text_P2_waiting = small_font.render("P2", True, '#00353F')
+text_proceed = small_font.render("Press < space > to proceed", True, '#00353F')
+
+
 
 while running:
 
@@ -20,17 +31,19 @@ while running:
         if keys[pygame.K_ESCAPE]:
             running = False  # Pour fermer programme
 
-        selection_statement_P1 = 1 #tres important pour reboot le menu
+        selection_statement_P1 = 1 #tres important pour reboot le menu et les scores
         flag_P1 = 0
         skin_P1 = 0
         ready_P1 = False
         repeat_1 = True
+        score_P1 = 0
 
         selection_statement_P2 = 1 #same
         flag_P2 = 0
         skin_P2 = 0
         ready_P2 = False
         repeat_2 = True
+        score_P2 = 0
 
         if keys[pygame.K_SPACE]:
             game_statement = 1
@@ -69,7 +82,8 @@ while running:
 
         Window.blit(pygame.transform.scale(BG_2, Window.get_size()), [0, 0])
         Window.blit(anneaux, [0, 0])
-        Window.blit(text_minton_surf, [182, 150])
+        Window.blit(text_minton_surf, [174, 134])
+        Window.blit(text_proceed, [547, 779])
         Window.blit(C1, [C1_x, C1_y - 50])
         Window.blit(C2, [C2_x, C2_y - 50])
         Window.blit(C3, [C3_x, C3_y - 50])
@@ -87,6 +101,7 @@ while running:
         keys = pygame.key.get_pressed()
         if keys[pygame.K_ESCAPE]:
            running = False  # Pour fermer programme
+
 
         # Menu P1 *************************************
         if selection_statement_P1 == 1:
@@ -242,13 +257,13 @@ while running:
 
 
         #Déroulement des drapeaux
-        if flag_P1 >= 2:
-            flag_P1 = 2
+        if flag_P1 >= 5:
+            flag_P1 = 5
         elif flag_P1 <= 0:
             flag_P1 = 0
 
-        if flag_P2 >= 2:
-            flag_P2 = 2
+        if flag_P2 >= 5:
+            flag_P2 = 5
         elif flag_P2 <= 0:
             flag_P2 = 0
 
@@ -258,14 +273,26 @@ while running:
         elif flag_P1 == 1:
             P1_Selected_flag = Flags_Allm
         elif flag_P1 == 2:
-            P1_Selected_flag = Flags_Fr
+            P1_Selected_flag = Flags_It
+        elif flag_P1 == 3:
+            P1_Selected_flag = Flags_Es
+        elif flag_P1 == 4:
+            P1_Selected_flag = Flags_En
+        elif flag_P1 == 5:
+            P1_Selected_flag = Flags_Us
 
         if flag_P2 == 0:
             P2_Selected_flag = Flags_Fr
         elif flag_P2 == 1:
             P2_Selected_flag = Flags_Allm
         elif flag_P2 == 2:
-            P2_Selected_flag = Flags_Fr
+            P2_Selected_flag = Flags_It
+        elif flag_P2 == 3:
+            P2_Selected_flag = Flags_Es
+        elif flag_P2 == 4:
+            P2_Selected_flag = Flags_En
+        elif flag_P2 == 5:
+            P2_Selected_flag = Flags_Us
 
 
         #Déroulement des skins
@@ -320,28 +347,14 @@ while running:
             Fond_P2 = P2_Fond_Waiting
 
 
-        #tuto
-        if keys[pygame.K_k]:
-            pos_x_temp += 1
-
-        if keys[pygame.K_h]:
-            pos_x_temp -= 1
-
-        if keys[pygame.K_u]:
-            pos_y_temp -= 1
-
-        if keys[pygame.K_j]:
-            pos_y_temp += 1
-
 
 
         Window.blit(pygame.transform.scale(BG_3, Window.get_size()), [0, 0])
-        Window.blit(texte, [30, 20])
 
         Window.blit(Fond_P1, [0, 0])
         Window.blit(Fond_P2, [0, 0])
 
-        print(pos_x_temp, pos_y_temp)
+
         if connected_1 or connected_2:
             Window.blit(Tuto, [276, 146])
 
@@ -373,8 +386,16 @@ while running:
             elif selection_statement_P2 == 3 :
                 Window.blit(Boutons, [455, 490])
 
+        Window.blit(text_menu, [334, 24])
 
-
+        if not (ready_P2 and ready_P1):
+            Window.blit(text_waiting, [576, 142])
+        else:
+            Window.blit(text_proceed, [540, 150])
+        if not ready_P1:
+            Window.blit(text_P1_waiting, [755, 142])
+        if not ready_P2:
+            Window.blit(text_P2_waiting, [822, 141])
 
     elif game_statement == 2:
         Window.blit(pygame.transform.scale(BG_1,Window.get_size()), [0, 0])  # Ouvre une fenêtre de jeu avec un arière plan défini, ici, c est fond
@@ -407,6 +428,7 @@ while running:
 
         if keys[pygame.K_s] and not rotation_in_progress1:
             rotation_in_progress1 = True
+            Service_P1 = False
 
         if keys[pygame.K_d]:
             pos_y1 += walk_speed
@@ -422,6 +444,7 @@ while running:
 
         if keys[pygame.K_DOWN] and not rotation_in_progress2:
             rotation_in_progress2 = True
+            Service_P2 = False
 
         if keys[pygame.K_RIGHT]:
             pos_y2 += walk_speed
@@ -429,14 +452,29 @@ while running:
 
         rotation_in_progress3 = True
 
+        # tuto
+        if keys[pygame.K_k]:
+            pos_x_temp += 1
+            score_P1 += 1
+        if keys[pygame.K_h]:
+            pos_x_temp -= 1
+            score_P1 -= 1
+        if keys[pygame.K_u]:
+            pos_y_temp -= 1
+            score_P2 -= 1
+        if keys[pygame.K_j]:
+            pos_y_temp += 1
+            score_P2 += 1
 
+        print(pos_x_temp, pos_y_temp)
 
 
     #VOLANNNNT
 
 
 
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_SPACE] or respawn_P1:
+            Service_P1 = True
             Actif = True
             pos_y3, pos_x3 = 360, 540
             en_saut_volant_D = False
@@ -450,6 +488,25 @@ while running:
             smash_P2 = False
             smash_P1 = False
             Contact = False
+            respawn_P1 = False
+
+        if keys[pygame.K_n] or respawn_P2:
+            Service_P2 = True
+            Actif = True
+            pos_y3, pos_x3 = 900, 540
+            en_saut_volant_D = False
+            en_saut_volant_G = False
+            volant_force = -14.5
+            GRAVITE_volant = GRAVITE
+            volant_speed = 14
+            vitesse_x3 = 0
+            one_time1 = True
+            one_time2 = True
+            smash_P2 = False
+            smash_P1 = False
+            Contact = False
+            respawn_P2 = False
+
 
         if en_saut_volant_G:
             pos_y3 += volant_speed
@@ -562,6 +619,32 @@ while running:
             en_saut_volant_D = False
             pos_x3 = SOL_VOLANT
 
+    #Détéction score: # 705 ou 609 à tester
+        if (pos_x3 == SOL_VOLANT) and (pos_y3 >= 609):
+            if score :
+                score_P1 += 1
+                score = False
+
+            if wait_before_new_point >= 60:
+                respawn_P1 = True
+                wait_before_new_point = 0
+                score = True
+            else :
+                wait_before_new_point += 1
+
+        if (pos_x3 == SOL_VOLANT) and (pos_y3 <= 609):
+            if score:
+                score_P2 += 1
+                score = False
+
+            if wait_before_new_point >= 60:
+                respawn_P2 = True
+                wait_before_new_point = 0
+                score = True
+            else:
+                wait_before_new_point += 1
+
+
     # *************** Détection de collision ***************
     # Obtenir les masques de collision pour P1 et P2
         mask_p1 = pygame.mask.from_surface(P1_Arm_rotated)
@@ -647,12 +730,26 @@ while running:
         else:
             Window.blit(P2_Arm, [pos_y2 - 53,pos_x2])
 
+    # Score
+        text_score = pixel_font.render(("{}:{}".format(score_P1, score_P2)), True, '#00353F')
+        text_rect = text_score.get_rect(center=(723, 454))
+        Window.blit(text_score, text_rect.topleft)
+
     # Volant
         if Actif:
             if rotation_in_progress3:
                 Window.blit(volant_rotated, rect_rotated3)
             else:
                 Window.blit(volant, [pos_y3, pos_x3])
+
+    # Service
+        #on veut afficher le petit logo service à gauche ou à droite tant que le joueur n'a pas tirer
+        if Service_P1:
+            Window.blit(service, [pos_y1 + 43, pos_x1 - 25])
+        if Service_P2:
+            Window.blit(service, [pos_y2 + 1, pos_x2 - 22])
+
+
 
 #********************************************************
 

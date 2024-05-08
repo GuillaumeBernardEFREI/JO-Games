@@ -104,7 +104,6 @@ BG_2 = Background(os.path.join("data","Ecran_titre","Fond_menu_4.png")).BD
 anneaux = General_Game_Object(os.path.join("data","Ecran_titre","Anneaux1.png")).sprite
 anneaux = pygame.transform.scale(anneaux, taille_ecran)
 
-titre = General_Game_Object(os.path.join("data","Ecran_titre","Nom du jeux_3.png")).sprite
 
 
 C1 = General_Game_Object(os.path.join("data","Ecran_titre","Cloud1.png")).sprite
@@ -145,8 +144,6 @@ C6_y = 0
 
 #Menu
 BG_3 = Background(os.path.join("data","Menu","New_Background.png")).BD
-
-texte = General_Game_Object(os.path.join("data","Menu","Character_selection.png")).sprite
 
 P1_Fond_Waiting = General_Game_Object(os.path.join("data","Menu","P1_Waiting.png")).sprite
 P1_Fond_Waiting = pygame.transform.scale(P1_Fond_Waiting, taille_ecran)
@@ -209,18 +206,43 @@ Flags_Allm = [General_Game_Object(os.path.join("data","Menu","Drapeau","Allemagn
 General_Game_Object(os.path.join("data","Menu","Drapeau","Allemagne","3.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Allemagne","4.png")).sprite,
 General_Game_Object(os.path.join("data","Menu","Drapeau","Allemagne","5.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Allemagne","6.png")).sprite]
 
+Flags_It = [General_Game_Object(os.path.join("data","Menu","Drapeau","Italy","1.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Italy","2.png")).sprite,
+General_Game_Object(os.path.join("data","Menu","Drapeau","Italy","3.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Italy","4.png")).sprite,
+General_Game_Object(os.path.join("data","Menu","Drapeau","Italy","5.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Italy","6.png")).sprite]
+
+Flags_Es = [General_Game_Object(os.path.join("data","Menu","Drapeau","Espagne","1.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Espagne","2.png")).sprite,
+General_Game_Object(os.path.join("data","Menu","Drapeau","Espagne","3.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Espagne","4.png")).sprite,
+General_Game_Object(os.path.join("data","Menu","Drapeau","Espagne","5.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Espagne","6.png")).sprite]
+
+Flags_En = [General_Game_Object(os.path.join("data","Menu","Drapeau","Anglais","1.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Anglais","2.png")).sprite,
+General_Game_Object(os.path.join("data","Menu","Drapeau","Anglais","3.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Anglais","4.png")).sprite,
+General_Game_Object(os.path.join("data","Menu","Drapeau","Anglais","5.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Anglais","6.png")).sprite]
+
+Flags_Us = [General_Game_Object(os.path.join("data","Menu","Drapeau","USA","1.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","USA","2.png")).sprite,
+General_Game_Object(os.path.join("data","Menu","Drapeau","USA","3.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","USA","4.png")).sprite,
+General_Game_Object(os.path.join("data","Menu","Drapeau","USA","5.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","USA","6.png")).sprite]
 
 
 #pox_x_temp = [200, 250]
 #pos_y_temp = [900, 253] #utilisé pour déterminer la position des perso lorsqu'on les affiches dans les cases
 
-pos_x_temp = 200
-pos_y_temp = 250
+pos_x_temp = 0
+pos_y_temp = 0
 
 #Jeux
 
+score_P1 = 0
+score_P2 = 0
+wait_before_new_point = 0
+respawn_P1 = True
+respawn_P2 = False
+score = True #permet d'attendre un peu avant de faire respawn le volant tout en empechant d'avoir trop de point généré d'un coup
+Service_P1 = True #initialiste la condition d'affichage du sprite service
+Service_P2 = False
+
+
 #Background
-BG_1 = Background(os.path.join("data","Jeux","Fond2.png")).BD
+BG_1 = Background(os.path.join("data","Jeux","Fond_final.png")).BD
 Flag_pole = General_Game_Object(os.path.join("data","Jeux","Flag_pole.png")).sprite
 Flag_pole = pygame.transform.scale(Flag_pole, taille_ecran)
 
@@ -244,4 +266,7 @@ P2_Arm = pygame.transform.scale(P2_Arm, taille_bras)
 filet = General_Game_Object(os.path.join("data","Jeux","filet.png")).sprite
 volant = General_Game_Object(os.path.join("data","Jeux","Volant2.png")).sprite
 volant = pygame.transform.scale(volant, taille_volant)
+
+#Petite icône de service
+service = General_Game_Object(os.path.join("data","Jeux","Service.png")).sprite
 
