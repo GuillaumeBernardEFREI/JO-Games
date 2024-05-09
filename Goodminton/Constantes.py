@@ -1,4 +1,4 @@
-from Vectors import *
+from Goodminton.Vectors import *
 
 # Fichier qui sert à initialiser les variables
 
@@ -95,81 +95,78 @@ taille_selection_skin = (240, 380)
 
 
 
-Window = Screen().screen
-
-
 #Ecran titre
-BG_2 = Background(os.path.join("data","Ecran_titre","Fond_menu_4.png")).BD
+BG_2 = Background(os.path.join("Goodminton","data","Ecran_titre","Fond_menu_4.png")).BD
 
-anneaux = General_Game_Object(os.path.join("data","Ecran_titre","Anneaux1.png")).sprite
+anneaux = General_Game_Object(os.path.join("Goodminton","data","Ecran_titre","Anneaux1.png")).sprite
 anneaux = pygame.transform.scale(anneaux, taille_ecran)
 
 
 
-C1 = General_Game_Object(os.path.join("data","Ecran_titre","Cloud1.png")).sprite
+C1 = General_Game_Object(os.path.join("Goodminton","data","Ecran_titre","Cloud1.png")).sprite
 C1 = pygame.transform.scale(C1, taille_ecran)
 C1_x = 0
 C1_y = 0
 
 
-C2 = General_Game_Object(os.path.join("data","Ecran_titre","Cloud2.png")).sprite
+C2 = General_Game_Object(os.path.join("Goodminton","data","Ecran_titre","Cloud2.png")).sprite
 C2 = pygame.transform.scale(C2, taille_ecran)
 C2_x = 0
 C2_y = 0
 
 
-C3 = General_Game_Object(os.path.join("data","Ecran_titre","Cloud3.png")).sprite
+C3 = General_Game_Object(os.path.join("Goodminton","data","Ecran_titre","Cloud3.png")).sprite
 C3 = pygame.transform.scale(C3, taille_ecran)
 C3_x = 0
 C3_y = 0
 
 
-C4 = General_Game_Object(os.path.join("data","Ecran_titre","Cloud4.png")).sprite
+C4 = General_Game_Object(os.path.join("Goodminton","data","Ecran_titre","Cloud4.png")).sprite
 C4 = pygame.transform.scale(C4, taille_ecran)
 C4_x = 0
 C4_y = 0
 
 
-C5 = General_Game_Object(os.path.join("data","Ecran_titre","Cloud5.png")).sprite
+C5 = General_Game_Object(os.path.join("Goodminton","data","Ecran_titre","Cloud5.png")).sprite
 C5 = pygame.transform.scale(C5, taille_ecran)
 C5_x = 0
 C5_y = 0
 
 
-C6 = General_Game_Object(os.path.join("data","Ecran_titre","Cloud6.png")).sprite
+C6 = General_Game_Object(os.path.join("Goodminton","data","Ecran_titre","Cloud6.png")).sprite
 C6 = pygame.transform.scale(C6, taille_ecran)
 C6_x = 0
 C6_y = 0
 
 
 #Menu
-BG_3 = Background(os.path.join("data","Menu","New_Background.png")).BD
+BG_3 = Background(os.path.join("Goodminton","data","Menu","New_Background.png")).BD
 
-P1_Fond_Waiting = General_Game_Object(os.path.join("data","Menu","P1_Waiting.png")).sprite
+P1_Fond_Waiting = General_Game_Object(os.path.join("Goodminton","data","Menu","P1_Waiting.png")).sprite
 P1_Fond_Waiting = pygame.transform.scale(P1_Fond_Waiting, taille_ecran)
 
-P1_Fond_Ready = General_Game_Object(os.path.join("data","Menu","P1_Ready.png")).sprite
+P1_Fond_Ready = General_Game_Object(os.path.join("Goodminton","data","Menu","P1_Ready.png")).sprite
 P1_Fond_Ready = pygame.transform.scale(P1_Fond_Ready, taille_ecran)
 
-P1_Fond_Question = General_Game_Object(os.path.join("data","Menu","ValidationP1.png")).sprite
+P1_Fond_Question = General_Game_Object(os.path.join("Goodminton","data","Menu","ValidationP1.png")).sprite
 P1_Fond_Question = pygame.transform.scale(P1_Fond_Question, taille_ecran)
 
 
-P2_Fond_Waiting = General_Game_Object(os.path.join("data","Menu","P2_Waiting.png")).sprite
+P2_Fond_Waiting = General_Game_Object(os.path.join("Goodminton","data","Menu","P2_Waiting.png")).sprite
 P2_Fond_Waiting = pygame.transform.scale(P2_Fond_Waiting, taille_ecran)
 
-P2_Fond_Ready = General_Game_Object(os.path.join("data","Menu","P2_Ready.png")).sprite
+P2_Fond_Ready = General_Game_Object(os.path.join("Goodminton","data","Menu","P2_Ready.png")).sprite
 P2_Fond_Ready = pygame.transform.scale(P2_Fond_Ready, taille_ecran)
 
-P2_Fond_Question = General_Game_Object(os.path.join("data","Menu","ValidationP2.png")).sprite
+P2_Fond_Question = General_Game_Object(os.path.join("Goodminton","data","Menu","ValidationP2.png")).sprite
 P2_Fond_Question = pygame.transform.scale(P2_Fond_Question, taille_ecran)
 
-Valid_P1 = General_Game_Object(os.path.join("data","Menu","Ready.png")).sprite
+Valid_P1 = General_Game_Object(os.path.join("Goodminton","data","Menu","Ready.png")).sprite
 Valid_P2 = Valid_P1
 
-Tuto = General_Game_Object(os.path.join("data","Menu","Tuto.png")).sprite
+Tuto = General_Game_Object(os.path.join("Goodminton","data","Menu","Tuto.png")).sprite
 
-Boutons = General_Game_Object(os.path.join("data","Menu","boutons.png")).sprite
+Boutons = General_Game_Object(os.path.join("Goodminton","data","Menu","boutons.png")).sprite
 
 ready_P2 = False #Permet de savoir si le joueur à choisi son skin
 ready_P1 = False
@@ -181,13 +178,13 @@ repeat_2 = True
 
 #Les differents skins
 
-P_clean = General_Game_Object(os.path.join("data","Skin","Menu","Player1_rien.png")).sprite
+P_clean = General_Game_Object(os.path.join("Goodminton","data","Skin","Menu","Player1_rien.png")).sprite
 P_clean = pygame.transform.scale(P_clean, taille_selection_skin)
 
-P_band = General_Game_Object(os.path.join("data","Skin","Menu","Player1.png")).sprite
+P_band = General_Game_Object(os.path.join("Goodminton","data","Skin","Menu","Player1.png")).sprite
 P_band = pygame.transform.scale(P_band, taille_selection_skin)
 
-P_spider = General_Game_Object(os.path.join("data","Skin","Menu","Player1_Spiderman.png")).sprite
+P_spider = General_Game_Object(os.path.join("Goodminton","data","Skin","Menu","Player1_Spiderman.png")).sprite
 P_spider = pygame.transform.scale(P_spider, taille_selection_skin)
 
 
@@ -198,29 +195,47 @@ ctn_flag = 0
 flag_state = 0
 
 
-Flags_Fr = [General_Game_Object(os.path.join("data","Menu","Drapeau","France","1.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","France","2.png")).sprite,
-General_Game_Object(os.path.join("data","Menu","Drapeau","France","3.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","France","4.png")).sprite,
-General_Game_Object(os.path.join("data","Menu","Drapeau","France","5.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","France","6.png")).sprite]
+Flags_Fr = [General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","France","1.png")).sprite, 
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","France","2.png")).sprite,
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","France","3.png")).sprite, 
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","France","4.png")).sprite,
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","France","5.png")).sprite, 
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","France","6.png")).sprite]
 
-Flags_Allm = [General_Game_Object(os.path.join("data","Menu","Drapeau","Allemagne","1.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Allemagne","2.png")).sprite,
-General_Game_Object(os.path.join("data","Menu","Drapeau","Allemagne","3.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Allemagne","4.png")).sprite,
-General_Game_Object(os.path.join("data","Menu","Drapeau","Allemagne","5.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Allemagne","6.png")).sprite]
+Flags_Allm = [General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Allemagne","1.png")).sprite, 
+              General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Allemagne","2.png")).sprite,
+              General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Allemagne","3.png")).sprite, 
+              General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Allemagne","4.png")).sprite,
+              General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Allemagne","5.png")).sprite, 
+              General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Allemagne","6.png")).sprite]
 
-Flags_It = [General_Game_Object(os.path.join("data","Menu","Drapeau","Italy","1.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Italy","2.png")).sprite,
-General_Game_Object(os.path.join("data","Menu","Drapeau","Italy","3.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Italy","4.png")).sprite,
-General_Game_Object(os.path.join("data","Menu","Drapeau","Italy","5.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Italy","6.png")).sprite]
+Flags_It = [General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Italy","1.png")).sprite, 
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Italy","2.png")).sprite,
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Italy","3.png")).sprite, 
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Italy","4.png")).sprite,
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Italy","5.png")).sprite, 
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Italy","6.png")).sprite]
 
-Flags_Es = [General_Game_Object(os.path.join("data","Menu","Drapeau","Espagne","1.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Espagne","2.png")).sprite,
-General_Game_Object(os.path.join("data","Menu","Drapeau","Espagne","3.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Espagne","4.png")).sprite,
-General_Game_Object(os.path.join("data","Menu","Drapeau","Espagne","5.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Espagne","6.png")).sprite]
+Flags_Es = [General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Espagne","1.png")).sprite, 
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Espagne","2.png")).sprite,
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Espagne","3.png")).sprite, 
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Espagne","4.png")).sprite,
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Espagne","5.png")).sprite, 
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Espagne","6.png")).sprite]
 
-Flags_En = [General_Game_Object(os.path.join("data","Menu","Drapeau","Anglais","1.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Anglais","2.png")).sprite,
-General_Game_Object(os.path.join("data","Menu","Drapeau","Anglais","3.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Anglais","4.png")).sprite,
-General_Game_Object(os.path.join("data","Menu","Drapeau","Anglais","5.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","Anglais","6.png")).sprite]
+Flags_En = [General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Anglais","1.png")).sprite, 
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Anglais","2.png")).sprite,
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Anglais","3.png")).sprite, 
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Anglais","4.png")).sprite,
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Anglais","5.png")).sprite, 
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","Anglais","6.png")).sprite]
 
-Flags_Us = [General_Game_Object(os.path.join("data","Menu","Drapeau","USA","1.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","USA","2.png")).sprite,
-General_Game_Object(os.path.join("data","Menu","Drapeau","USA","3.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","USA","4.png")).sprite,
-General_Game_Object(os.path.join("data","Menu","Drapeau","USA","5.png")).sprite, General_Game_Object(os.path.join("data","Menu","Drapeau","USA","6.png")).sprite]
+Flags_Us = [General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","USA","1.png")).sprite, 
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","USA","2.png")).sprite,
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","USA","3.png")).sprite, 
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","USA","4.png")).sprite,
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","USA","5.png")).sprite, 
+            General_Game_Object(os.path.join("Goodminton","data","Menu","Drapeau","USA","6.png")).sprite]
 
 
 #pox_x_temp = [200, 250]
@@ -242,31 +257,31 @@ Service_P2 = False
 
 
 #Background
-BG_1 = Background(os.path.join("data","Jeux","Fond_final.png")).BD
-Flag_pole = General_Game_Object(os.path.join("data","Jeux","Flag_pole.png")).sprite
+BG_1 = Background(os.path.join("Goodminton","data","Jeux","Fond_final.png")).BD
+Flag_pole = General_Game_Object(os.path.join("Goodminton","data","Jeux","Flag_pole.png")).sprite
 Flag_pole = pygame.transform.scale(Flag_pole, taille_ecran)
 
 
 # Configuration du corps de P1
-P1_Body = General_Game_Object(os.path.join("data","Skin","Jeux","P1_Body.png")).sprite
+P1_Body = General_Game_Object(os.path.join("Goodminton","data","Skin","Jeux","P1_Body.png")).sprite
 P1_Body = pygame.transform.scale(P1_Body, taille_joueur)
 
-P1_Arm = General_Game_Object(os.path.join("data","Skin","Jeux","P1_Arm.png")).sprite
+P1_Arm = General_Game_Object(os.path.join("Goodminton","data","Skin","Jeux","P1_Arm.png")).sprite
 P1_Arm = pygame.transform.scale(P1_Arm, taille_bras)
 
 
 # Configuration du corps de p2
-P2_Body = General_Game_Object(os.path.join("data","Skin","Jeux","P2_Body.png")).sprite
+P2_Body = General_Game_Object(os.path.join("Goodminton","data","Skin","Jeux","P2_Body.png")).sprite
 P2_Body = pygame.transform.scale(P2_Body, taille_joueur)
 
-P2_Arm = General_Game_Object(os.path.join("data","Skin","Jeux","P2_Arm.png")).sprite
+P2_Arm = General_Game_Object(os.path.join("Goodminton","data","Skin","Jeux","P2_Arm.png")).sprite
 P2_Arm = pygame.transform.scale(P2_Arm, taille_bras)
 
 # Configuration filet / volant
-filet = General_Game_Object(os.path.join("data","Jeux","filet.png")).sprite
-volant = General_Game_Object(os.path.join("data","Jeux","Volant2.png")).sprite
+filet = General_Game_Object(os.path.join("Goodminton","data","Jeux","filet.png")).sprite
+volant = General_Game_Object(os.path.join("Goodminton","data","Jeux","Volant2.png")).sprite
 volant = pygame.transform.scale(volant, taille_volant)
 
 #Petite icône de service
-service = General_Game_Object(os.path.join("data","Jeux","Service.png")).sprite
+service = General_Game_Object(os.path.join("Goodminton","data","Jeux","Service.png")).sprite
 

@@ -1,16 +1,16 @@
 import generic_classes as gc
 import pygame as pg
 import os
-import game1 as g1
 import shooting.rvpd_shooting as shooting
 import basketball.main as basketball
+import Goodminton.Goodminton as Goodminton
 
 def init() -> dict:
     """
     Function to create the variables used in main.
     """
     var={}
-    size=(420,420)
+    size=(960,540)
     sc=gc.Screen(size,"JO-Games")
     var["Win"]=sc.win
     var["Running"]=True
@@ -21,10 +21,12 @@ def init() -> dict:
     var["Sizes"]={"max_x":10000,"max_y":10000,"game-x":2500,"game-y":3500,"sep-x":625,"sep-y":1000}
 
     var["Background"]=gc.Background(os.path.join("data","size.png")).BG
-    var["Games"]={"game-1":gc.General_Game_Object(os.path.join("data","basket.png")),
+    var["Games"]={"game-1":gc.General_Game_Object(os.path.join("data","Badminton.jpg")),
                   "game-2":gc.General_Game_Object(os.path.join("data","basket.png")),
                   "game-3":gc.General_Game_Object(os.path.join("data","shooting.jpg")),
-                  "game-4":gc.General_Game_Object(os.path.join("data","basket.png"))}
+                  "game-4":gc.General_Game_Object(os.path.join("data","basket.png")),
+                  "free":gc.General_Game_Object(None,transparent=True),
+                  "game-6":gc.General_Game_Object(os.path.join("data","basket.png"))}
 
     
     var["Win"],var["gamesep"],var["display_Games"],var["disp_Background"],var["gamepos"]=all_resize(size,var["Sizes"],var["Games"],var["Background"])
@@ -133,10 +135,6 @@ def checkcolision(mousepos:tuple[float,float],Games:dict[str:gc.General_Game_Obj
                 return 3
             if game=="game-4":
                 return 4
-            if game=="game-5":
-                return 5
-            if game=="game-6":
-                return 6
         i+=1
     return 0 #did not click a game
 
@@ -148,18 +146,16 @@ def play_game(game:int,screen:pg.display,fps:int) -> bool:
     Returns a bool, false to say that you continue or True to say to close the screen.
     """
     if game==1:
-        g1.game1()
+        screen=win_resize((1450, 840))
+        screen.fill("black")
+        Goodminton.Goodminton(screen)
     elif game==2:
         screen=win_resize((950, 600))#hard coded in the game code.
         screen.fill("black")# to not have unwanted image continue beeing seen.
         basketball.basketball(screen)
     elif game==3:
-        if (shooting.game_shooting(screen,fps)==True):
+        if (shooting.game_shooting(screen,fps)==True): #True means to totally quit the game.
             return True
     elif game==4:
         print("4")
-    elif game==5:
-        print("5")
-    elif game==6:
-        print("6")
     return False
