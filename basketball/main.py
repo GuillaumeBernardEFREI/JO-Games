@@ -30,6 +30,7 @@ def game_menu(screen):
         pygame.display.update()
 def display_score_menu(screen):
     menu_running = True
+    var.score_sound.play()
     while menu_running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -204,7 +205,7 @@ def basketball(screen):
         var.clock.tick(60)
         pygame.display.update()
         # Display score menu when time reaches 80 seconds
-        if current_time // 1000 == 60 and current_time != var.last_score_menu_time:
+        if current_time // 1000 == 30 and current_time != var.last_score_menu_time:
             display_score_menu(screen)
             var.last_score_menu_time = current_time
             var.clock.tick(60)

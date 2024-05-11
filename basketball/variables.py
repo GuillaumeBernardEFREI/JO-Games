@@ -100,3 +100,5 @@ win_sound = pygame.mixer.Sound(os.path.join("basketball","assets","yeahoo.wav"))
 win_sound.set_volume(0.3)  # Set volume to 30%
 loose_sound = pygame.mixer.Sound(os.path.join("basketball","assets","wii-sports-bowling-awww.wav"))
 loose_sound.set_volume(0.3)  # Set volume to 30%
+score_sound = pygame.mixer.Sound(os.path.join("basketball","assets","crowd-cheer.wav"))
+score_sound.set_volume(0.3)  # Set volume to 30%
