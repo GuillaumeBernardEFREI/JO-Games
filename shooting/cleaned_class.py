@@ -1,37 +1,11 @@
 import pygame
 from math import *
 import shooting.ran_gen as rg
+import generic_classes as gc
 
-class Screen(pygame.Surface):
-    def __init__(self):
-        size=1180,620
-        pygame.Surface.__init__(self,size)
-        self.screen=pygame.display.set_mode(size,pygame.RESIZABLE)
-
-
-class Background(pygame.sprite.Sprite):
-    def __init__(self,path):
-        pygame.sprite.Sprite.__init__(self)
-        self.BD=pygame.image.load(path).convert()
-
-
-class General_Game_Object(pygame.sprite.Sprite):
-    def __init__(self,img_path, **kargs):#*args and **kargs are if you don't want to have these values in all the classes but only in some that you created.
-        pygame.sprite.Sprite.__init__(self)
-        self.sprite=pygame.image.load(img_path).convert_alpha()#The convert alpha should make the transparent pixels in png really transparent in pygame.
-        if "resize" in kargs:
-            self.resize(kargs['resize'])
-
-    def resize(self,values:tuple[float,float]) -> None:
-        self.sprite = pygame.transform.scale(self.sprite,values)
-
-    def rect(self) ->pygame.rect:
-        return self.sprite.get_rect()
-    #rect is the position of the sprite.
-
-class UFO(General_Game_Object):
+class UFO(gc.General_Game_Object):
     def __init__(self,img_path):
-        General_Game_Object.__init__(self,img_path)
+        gc.General_Game_Object.__init__(self,img_path)
         #to define the variables and not have errors.
         self.x=-100
         self.y=-100
@@ -47,7 +21,7 @@ class UFO(General_Game_Object):
         self.time+=1/fps
         self.x,self.y=self.traj.position(self.time,True,screen_size)
 
-    def draw(self,screen:Screen) -> None:
+    def draw(self,screen:gc.Screen) -> None:
         screen.blit(self.sprite,[self.x,self.y])
 
     def check(self,scr_size:pygame.rect) -> bool:

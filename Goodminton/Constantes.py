@@ -1,4 +1,6 @@
-from Goodminton.Vectors import *
+from generic_classes import *
+import pygame
+import os
 
 # Fichier qui sert à initialiser les variables
 
@@ -96,7 +98,7 @@ taille_selection_skin = (240, 380)
 
 
 #Ecran titre
-BG_2 = Background(os.path.join("Goodminton","data","Ecran_titre","Fond_menu_4.png")).BD
+BG_2 = Background(os.path.join("Goodminton","data","Ecran_titre","Fond_menu_4.png")).BG
 
 anneaux = General_Game_Object(os.path.join("Goodminton","data","Ecran_titre","Anneaux1.png")).sprite
 anneaux = pygame.transform.scale(anneaux, taille_ecran)
@@ -140,7 +142,7 @@ C6_y = 0
 
 
 #Menu
-BG_3 = Background(os.path.join("Goodminton","data","Menu","New_Background.png")).BD
+BG_3 = Background(os.path.join("Goodminton","data","Menu","New_Background.png")).BG
 
 P1_Fond_Waiting = General_Game_Object(os.path.join("Goodminton","data","Menu","P1_Waiting.png")).sprite
 P1_Fond_Waiting = pygame.transform.scale(P1_Fond_Waiting, taille_ecran)
@@ -257,7 +259,7 @@ Service_P2 = False
 
 
 #Background
-BG_1 = Background(os.path.join("Goodminton","data","Jeux","Fond_final.png")).BD
+BG_1 = Background(os.path.join("Goodminton","data","Jeux","Fond_final.png")).BG
 Flag_pole = General_Game_Object(os.path.join("Goodminton","data","Jeux","Flag_pole.png")).sprite
 Flag_pole = pygame.transform.scale(Flag_pole, taille_ecran)
 

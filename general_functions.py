@@ -22,11 +22,11 @@ def init() -> dict:
 
     var["Background"]=gc.Background(os.path.join("data","size.png")).BG
     var["Games"]={"game-1":gc.General_Game_Object(os.path.join("data","Badminton.jpg")),
+                  "free-1":gc.General_Game_Object(None,transparent=True),
                   "game-2":gc.General_Game_Object(os.path.join("data","basket.png")),
                   "game-3":gc.General_Game_Object(os.path.join("data","shooting.jpg")),
-                  "game-4":gc.General_Game_Object(os.path.join("data","basket.png")),
-                  "free":gc.General_Game_Object(None,transparent=True),
-                  "game-6":gc.General_Game_Object(os.path.join("data","basket.png"))}
+                  "free-2":gc.General_Game_Object(None,transparent=True),
+                  "game-4":gc.General_Game_Object(os.path.join("data","basket.png"))}
 
     
     var["Win"],var["gamesep"],var["display_Games"],var["disp_Background"],var["gamepos"]=all_resize(size,var["Sizes"],var["Games"],var["Background"])

@@ -1,6 +1,7 @@
 import os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] ="hide" #to hide the ad message pygame prints.
 import pygame
+import generic_classes as gc
 import shooting.cleaned_class as cc
 import shooting.functions as func
 
@@ -24,7 +25,7 @@ def init(scr_rect:pygame.rect) -> dict:
             }
          }
     var.update({ #adding all the sprites which needs the constant in var.
-        "BG":func.resize(cc.Background(os.path.join("shooting","data","greenfield.jpg")).BD,(var["rect"].right,var["rect"].bottom)),
+        "BG":func.resize(gc.Background(os.path.join("shooting","data","greenfield.jpg")).BG,(var["rect"].right,var["rect"].bottom)),
         })
     return var
 
@@ -32,7 +33,7 @@ def init(scr_rect:pygame.rect) -> dict:
 
 
 
-def game_shooting(Screen:cc.Screen,fps:int):
+def game_shooting(Screen:gc.Screen,fps:int):
     var=init(Screen.get_rect())
     time=0
     while not var["quit"]: #Game Loop
