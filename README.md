@@ -5,10 +5,9 @@ Welcome to the Paris 2024 Olympics JO-Games Collection! This collection features
 ## Games Menu:
 
 When you launch the game, you will be presented with a main menu where you can choose which game you want to play. Here are the available games:
-
- ////////////////////////////////////////////////////////////////////////////////////////
  
 ### JO-Basketball
+![JO-Basketball](https://github.com/GuillaumeBernardEFREI/JO-Games/blob/master/data/basket.png?raw=True)
 A simple basketball game created using Pygame.
 initial git: https://github.com/PaulGournay/pygame_basketball.git
 ### Description
@@ -18,10 +17,9 @@ This is a basic basketball game created with Pygame. The player controls the ang
 - Realistic ball physics with bounce and gravity.
 - Simple menu system.
 - Score after 30 seconds
-  
-////////////////////////////////////////////////////////////////////////////////////////
  
 ### Goodminton
+![Goodminton](https://github.com/GuillaumeBernardEFREI/JO-Games/blob/master/data/Badminton.jpg?raw=True)
 A badmiton game created with Pygame.
 initial git:
 ### Description
@@ -33,7 +31,17 @@ Each player controls their own character, we can move Left/Right, jump and shoot
 - Basic menu system with flag selection (OG - Theme)
 - Score throughout the game
 
+### Trapshooting
+![Trapshooting](https://github.com/GuillaumeBernardEFREI/JO-Games/blob/master/data/shooting.jpg?raw=True)
+### Description
+Trapshooting is a simple game 
+made to imitate the olympic sport of trap shooting which can otherwise be known as clay pigeon shooting
+### Features
+- Increasing difficulty base on how many kills you have
+- Random Generator for the trajectories
 
+### Javlot
+![Javlot](https://github.com/GuillaumeBernardEFREI/JO-Games/blob/master/data/javelot.png?raw=True)
 
 # Getting Started
 
