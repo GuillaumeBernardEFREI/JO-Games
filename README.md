@@ -1,4 +1,4 @@
-##JO-Games
+# JO-Games
 
 Welcome to the Paris 2024 Olympics JO-Games Collection! This collection features four exciting Olympic-themed mini-games for you to enjoy.
 
