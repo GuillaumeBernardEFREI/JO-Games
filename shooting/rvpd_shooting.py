@@ -6,22 +6,23 @@ import shooting.cleaned_class as cc
 import shooting.functions as func
 
 def init(scr_rect:pygame.rect) -> dict:
-    font=pygame.font.SysFont('Corbel',50)
+    font=pygame.font.SysFont('freesansbold.ttf',50)
+    color="aquamarine"
     var={"quit":False,
          "menu":True,
          "rect":scr_rect,
          "clock":pygame.time.Clock(),
          "font":font,
          "menu_obj":{
-             "help-txt":[font.render("This game is played with the mouse.",True,"black"),
-                         font.render("What you need to do is to click",True,"black"),
-                         font.render("On the UFOs that will appear while playing.",True,"black"),
-                         font.render("At the start the UFOs will spawn slowly.",True,"black"),
-                         font.render("They will later spawn faster every time you reach",True,"black"),
-                         font.render("a multiple of five destroyed UFOs.",True,"black"),
-                         font.render("Click anywhere on the screen to start.",True,"black"),
-                         font.render("",True,"black"),
-                         font.render("To exit you can use the escape key.",True,"black")]
+             "help-txt":[font.render("This game is played with the mouse.",True,color),
+                         font.render("What you need to do is to click",True,color),
+                         font.render("On the UFOs that will appear while playing.",True,color),
+                         font.render("At the start the UFOs will spawn slowly.",True,color),
+                         font.render("They will later spawn faster every time you",True,color),
+                         font.render("reach a multiple of five destroyed UFOs.",True,color),
+                         font.render("Click anywhere on the screen to start.",True,color),
+                         font.render("",True,color),
+                         font.render("To exit you can use the escape key.",True,color)]
             }
          }
     var.update({ #adding all the sprites which needs the constant in var.
