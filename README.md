@@ -18,6 +18,21 @@ This is a basic basketball game created with Pygame. The player controls the ang
 - Score after 30 seconds
 
 
+
+### Goodminton
+A badmiton game created with Pygame.
+initial git:
+### Description
+This game mode offers a 1V1 badminton game.
+Each player controls their own character, we can move Left/Right, jump and shoot the ball.
+### Features
+- 2 shooting possibilities: parabolic shot or smash.
+- Realistic ball physics (parabolic trajectory)
+- Basic menu system with flag selection (OG - Theme)
+- Score throughout the game
+
+
+
 # Getting Started
 
 ### Prerequisites
