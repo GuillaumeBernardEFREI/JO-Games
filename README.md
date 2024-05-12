@@ -8,6 +8,7 @@ When you launch the game, you will be presented with a main menu where you can c
 
 ### JO-Basketball
 A simple basketball game created using Pygame.
+initial git: https://github.com/PaulGournay/pygame_basketball.git
 ### Description
 This is a basic basketball game created with Pygame. The player controls the angle and power of the ball to shoot it into the hoop.
 ### Features
