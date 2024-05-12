@@ -4,6 +4,7 @@ import os
 import shooting.rvpd_shooting as shooting
 import basketball.main as basketball
 import Goodminton.Goodminton as Goodminton
+from javlot.main import javlot
 
 def init() -> dict:
     """
@@ -26,7 +27,7 @@ def init() -> dict:
                   "game-2":gc.General_Game_Object(os.path.join("data","basket.png")),
                   "game-3":gc.General_Game_Object(os.path.join("data","shooting.jpg")),
                   "free-2":gc.General_Game_Object(None,transparent=True),
-                  "game-4":gc.General_Game_Object(os.path.join("data","basket.png"))}
+                  "game-4":gc.General_Game_Object(os.path.join("data","javelot.png"))}
 
     
     var["Win"],var["gamesep"],var["display_Games"],var["disp_Background"],var["gamepos"]=all_resize(size,var["Sizes"],var["Games"],var["Background"])
@@ -154,8 +155,13 @@ def play_game(game:int,screen:pg.display,fps:int) -> bool:
         screen.fill("black")# to not have unwanted image continue beeing seen.
         basketball.basketball(screen)
     elif game==3:
+
         if (shooting.game_shooting(screen,fps)==True): #True means to totally quit the game.
             return True
     elif game==4:
-        print("4")
+        screen=win_resize((1080,720))
+        screen.fill("black")
+        javlot(screen)
+
+
     return False
