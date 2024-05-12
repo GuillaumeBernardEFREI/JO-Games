@@ -5,7 +5,9 @@ Welcome to the Paris 2024 Olympics JO-Games Collection! This collection features
 ## Games Menu:
 
 When you launch the game, you will be presented with a main menu where you can choose which game you want to play. Here are the available games:
+
  ////////////////////////////////////////////
+ 
 ### JO-Basketball
 A simple basketball game created using Pygame.
 initial git: https://github.com/PaulGournay/pygame_basketball.git
@@ -16,7 +18,9 @@ This is a basic basketball game created with Pygame. The player controls the ang
 - Realistic ball physics with bounce and gravity.
 - Simple menu system.
 - Score after 30 seconds
+  
  ////////////////////////////////////////////
+ 
 ### Goodminton
 A badmiton game created with Pygame.
 initial git:
