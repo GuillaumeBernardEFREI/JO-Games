@@ -1,4 +1,4 @@
-# JO-Basketball
+### JO-Basketball
 
 A simple basketball game created using Pygame.
 
