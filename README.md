@@ -1,4 +1,4 @@
-#JO-Games
+##JO-Games
 
 Welcome to the Paris 2024 Olympics JO-Games Collection! This collection features four exciting Olympic-themed mini-games for you to enjoy.
 
@@ -6,27 +6,16 @@ Welcome to the Paris 2024 Olympics JO-Games Collection! This collection features
 
 When you launch the game, you will be presented with a main menu where you can choose which game you want to play. Here are the available games:
 
-#Game 1
 ### JO-Basketball
-
 A simple basketball game created using Pygame.
-
 ### Description
-
 This is a basic basketball game created with Pygame. The player controls the angle and power of the ball to shoot it into the hoop.
-
 ### Features
-
 - Adjust the angle and power of the shot.
 - Realistic ball physics with bounce and gravity.
 - Simple menu system.
 - Score after 30 seconds
 
-#Game 2
-
-#Game 3
-
-#Game 4
 
 # Getting Started
 
